@@ -1,0 +1,34 @@
+﻿@model Programme
+
+<div class="container row">
+    <form method="post" style="width: 100%">
+        <div class="form-group">
+            <label asp-for="Name"></label>
+            <div>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Cost"></label>
+            <div>
+                <input asp-for="Cost" class="form-control" />
+                <span asp-validation-for="Cost"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Duration"></label>
+            <div>
+                <input asp-for="Duration" class="form-control" />
+                <span asp-validation-for="Duration"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Create</button>
+        </div>
+    </form>
+</div>
+

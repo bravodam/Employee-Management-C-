@@ -1,0 +1,71 @@
+﻿@model ProgrammeDetailsViewModel
+
+@{
+    ViewBag.Title = "Course Details";
+    ViewBag.controller = "guarantor";
+}
+
+<div class="card">
+    
+    <div class="card-body">
+        <h4 class="card-title">@Model.Name</h4>
+        <h6>Cost: @Model.Cost</h6>
+        <h6>Duration: @Model.Duration</h6>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                Courses(s) In This Program
+            </div>
+            <div class="card-body">
+                @if (Model.Prog_Courses != null)
+                {
+                    @foreach (var course in Model.Prog_Courses)
+                    {
+                        <a asp-controller="course" asp-action="details" asp-route-id="@course.CourseId">
+                            @course.Course.Title
+                        </a>
+                        <br />
+                    }
+                }
+                else
+                {
+                    <h5>None at the moment</h5>
+                }
+            </div>
+            <div class="card-footer">
+                <a asp-controller="programme" asp-action="ManageProgrammeCourses" asp-route-id="@Model.ProgrammeId" class="btn btn-primary" style="width:auto">
+                    Manage Courses +
+                </a>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                Requirements
+            </div>
+            <div class="card-body">
+                @if (ViewBag.requirements != null)
+                {
+                    <h5>@ViewBag.requirements</h5>
+                }
+                else
+                {
+                    <h5>None at the moment</h5>
+                }
+            </div>
+            <div class="card-footer">
+                <a asp-controller="programme" asp-action="ManageProgrammeRequirements" asp-route-id="@Model.ProgrammeId" class="btn btn-primary" style="width:auto">
+                    Manage Requirements
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-header">
+        <form method="post" asp-controller="programme" asp-action="remove" asp-route-id="@Model.ProgrammeId">
+            <a class="btn btn-default border" asp-controller="course" asp-action="index">Back</a>
+            <a class="btn btn-primary" asp-controller="course" asp-action="edit" asp-route-id="@Model.ProgrammeId">Edit</a>
+            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete')">Delete</button>
+        </form>
+    </div>
+</div>

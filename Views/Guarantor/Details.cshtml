@@ -1,0 +1,45 @@
+﻿@model Guarantor
+
+@{
+    ViewBag.Title = "Guarantor Details";
+}
+
+    <div class="card">
+        <div class="card-header">
+            @Model.Name
+        </div>
+        <div class="card-body">
+            <h4 class="card-title">For Student with ID @Model.StudentId</h4>
+            <p>Phone: @Model.Phone</p>
+            <p>Doc Url: @Model.DocUrl</p>
+        </div>
+
+        <div class="card m-4">
+            <div class="card-header">
+                <h5>Gurantor For</h5>
+            </div>
+            <div class="card-body">
+                @if (ViewBag.guarantorFor == null)
+                {
+                    <h5 class="card-title">None at the moment</h5>
+                }
+                else
+                {
+                    @foreach (var dev in ViewBag.guarantorFOr)
+                    {
+                        <p class="card-title">Name: @dev.Student.Name</p>
+                        <p class="card-title">Email: @dev.Student.Email</p>
+                        <p class="card-title">Gender: @dev.Student.Gender</p>
+                    }
+                }
+            </div>
+        </div>
+
+        <div class="card-footer">
+            <form method="post" asp-controller="guarantor" asp-action="remove" asp-route-id="@Model.ID">
+                <a class="btn btn-default border" asp-controller="guarantor" asp-action="index">Back</a>
+                <a class="btn btn-primary" asp-controller="guarantor" asp-action="edit" asp-route-id="@Model.ID">Edit</a>
+                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete')">Delete</button>
+            </form>
+        </div>
+    </div>

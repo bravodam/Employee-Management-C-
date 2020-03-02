@@ -1,0 +1,52 @@
+﻿@model Batch
+
+<div class="container">
+    <div class="row">
+        <form method="post" style="width: 100%">
+            <div class="form-group">
+                <label asp-for="Name" class="col-form-label"></label>
+                <div>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ProgrammeId"></label>
+                <div>
+                    <input asp-for="ProgrammeId" class="form-control"/>
+                    <span asp-validation-for="ProgrammeId"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Supervisor"></label>
+                <div>
+                    <input asp-for="Supervisor" class="form-control" />
+                    <span asp-validation-for="Supervisor"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="StartDate"></label>
+                <div>
+                    <input asp-for="StartDate" class="form-control" />
+                    <span asp-validation-for="StartDate"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="EndDate"></label>
+                <div>
+                    <input asp-for="EndDate" class="form-control" />
+                    <span asp-validation-for="EndDate"></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                    <button type="submit" class="btn btn-primary">Create</button>
+            </div>
+        </form>
+    </div>
+</div>
+

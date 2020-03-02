@@ -1,0 +1,50 @@
+﻿@model Batch
+@inject IEmployeeRepository _empRepository
+
+@{
+    ViewBag.Title = "Edit Course";
+    var _emp = new MockEmployeeRepository();
+    ViewBag.employees = _emp.GetAllEmployees().Count();
+}
+<h5>Update Course</h5>
+<form asp-controller="batch" asp-action="edit" method="post" class="mt-3">
+    <input type="hidden" asp-for="Id" />
+    <div class="form-group row">
+        <label asp-for="Name" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="Name" class="form-control" placeholder="Course Title" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label asp-for="Supervisor" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="Supervisor" class="form-control" placeholder="Course Code" />
+            <span asp-validation-for="Supervisor" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label asp-for="StartDate" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="StartDate" class="form-control" placeholder="Instructor" />
+            <span asp-validation-for="StartDate" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label asp-for="EndDate" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="EndDate" class="form-control" placeholder="Duration" />
+            <span asp-validation-for="EndDate" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="text-danger" asp-validation-summary="All"></div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary form-control">Update</button>
+        <a class="btn btn-deafault border" asp-controller="batch" asp-action="index">Cancel</a>
+    </div>
+</form>

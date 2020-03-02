@@ -1,0 +1,43 @@
+﻿@model IEnumerable<Batch>
+@inject IEmployeeRepository _empRepository
+
+@{
+    ViewBag.Title = "Batch List";
+}
+
+
+<div class="card mb-4" style="width: 100%;">
+    <div class="card-header bg-primary ">
+        All Courses
+    </div>
+    <div class="card-body text-center">
+
+        <div class="text-right p3 mb-3 p-auto">
+            <a asp-controller="batch" asp-action="create" class=" btn btn-primary" style="width: auto">Add Batch</a>
+        </div>
+
+        <div class="row">
+            <div class="table-responsive-sm col-md-12">
+                <table id="example" class="table table-striped table-bordered table-hover" style="width: 100%">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Supervisor</th>
+                            <th>StartDate</th>
+                            <th>EndDate</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+
+                </table>
+                `
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        exampleLoad("/batch/getall/", ["name", "supervisor", "startDate", "endDate", "id"], "batch");
+    </script>
+}

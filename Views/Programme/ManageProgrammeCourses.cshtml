@@ -1,0 +1,29 @@
+﻿@model List<ProgramCoursesViewModel>
+
+<form method="post" asp-controller="programme" asp-action="manageprogrammecourses" asp-route-id="@ViewBag.progId">
+    <div>
+        <div class="card">
+            <div class="card-header">
+                Manage Programme Courses
+            </div>
+            <div class="card-body">
+                @for (int i = 0; i < Model.Count; i++)
+                {
+                    <div class="form-check m-1">
+                        <input type="hidden" asp-for="@Model[i].CourseId" />
+                        <input type="hidden" asp-for="@Model[i].CourseTitle" />
+                        <input asp-for="@Model[i].IsSelected" class="form-check-input" />
+                        <label asp-for="@Model[i].IsSelected" class="form-check-label">
+                            @Model[i].CourseTitle
+                        </label>
+                    </div>
+                }
+                <div asp-validation-summary="All"></div>
+            </div>
+            <div class="card-footer">
+                <input type="submit" value="Update" class="btn btn-primary" style="width: auto" />
+                <a asp-action="details" asp-route-id="@ViewBag.progId" class="btn btn-primary" style="width:auto">Cancel</a>
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,111 @@
+﻿@model Student
+@inject IEmployeeRepository _empRepository
+
+@{
+    ViewBag.Title = "Employee Details";
+    var _emp = new MockEmployeeRepository();
+    ViewBag.employees = _emp.GetAllEmployees().Count();
+}
+
+<div class="row justify-content-center m-3 card">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <h1>@Model.Name</h1>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <img class="card-img-top mb-3 m-auto" src="~/images/noimage.jpg" />
+
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-header m-2">
+                        Name: @Model.Name
+                    </div>
+                    <div class="card-header m-2">
+                        Email: @Model.Email
+                    </div>
+                    <div class="card-header m-2">
+                        Gender: @Model.Gender
+                    </div>
+                    <div class="card-header m-2">
+                        Age: @Model.Age
+                    </div>
+                    <div class="card-header m-2">
+                        Batch: @Model.Batch.Name
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h5>Guarantor(s)</h5>
+                </div>
+                <div class="card-body">
+                    @if (ViewBag.studentGuarantors != null && ViewBag.studentGuarantors.Count > 0)
+                    {
+                        @foreach (var guarantor in ViewBag.studentGuarantors)
+                        {
+                            <p><a class="text-dark" asp-action="details" asp-controller="guarantor" asp-route-id="@guarantor.ID">@guarantor.Name</a></p>
+                        }
+                    }
+                    else
+                    {
+                        <p>None at the moment</p>
+                    }
+                </div>
+                <div class="card-footer">
+                    <a asp-controller="guarantor" asp-action="addguarantor" asp-route-studentId="@Model.StudentId" class="btn btn-primary" style="width: auto; font-size: 10px">
+                        Add Guarantor
+                    </a>
+                    <a href="#" class="btn btn-danger" style="width: auto; font-size: 10px">
+                        Remove Guarantor
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h5>Courses</h5>
+            </div>
+            <div class="card-body">
+                @if (ViewBag.courses != null)
+                {
+                    <ul class="list-group">
+                        @foreach (var course in ViewBag.courses)
+                        {
+                        <li class="list-group-item"><a class="text-dark" asp-action="details" asp-controller="course" asp-route-id="@course.CourseId">@_empRepository.GetCourse(course.CourseId).Title</a></li>
+                        }
+                    </ul>
+                }
+                else
+                {
+                    <p>None at the moment</p>
+                }
+            </div>
+            <div class="card-footer">
+                <a asp-controller="student" asp-action="addcourse" asp-route-id="@Model.StudentId" class="btn btn-primary" style="width: auto; font-size: 10px">
+                    Add Course
+                </a>
+                <a href="#" class="btn btn-danger" style="width: auto; font-size: 10px">
+                    Remove Course
+                </a>
+            </div>
+        </div>
+    </div>
+
+        <div class="card-footer">
+            <form method="post" asp-controller="student" asp-action="remove" asp-route-id="@Model.StudentId">
+                <a asp-controller="student" asp-action="index" class="btn btn-primary">Back</a>
+                <a asp-controller="student" asp-action="edit" asp-route-id="@Model.StudentId" class="btn btn-primary">Edit</a>
+                <button class="btn btn-danger" type="submit" onclick="return confirm('Are you sure you want to delete')">Delete</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/js/CustomScript.js"></script>
+}

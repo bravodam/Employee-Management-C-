@@ -1,0 +1,53 @@
+﻿@model Course
+
+@{
+    ViewBag.Title = "Course Details";
+    ViewBag.controller = "guarantor";
+}
+
+    <div class="card">
+        <div class="card-header">
+            @Model.Title
+        </div>
+        <div class="card-body">
+            <h4 class="card-title">By @Model.Instructor</h4>
+            <h6>Course Code: @Model.Code</h6>
+            <h6>Duration: @Model.Duration</h6>
+            <h6>Level: @Model.Level</h6>
+        </div>
+
+        <div class="card-header">
+            <form method="post" asp-controller="course" asp-action="remove" asp-route-id="@Model.CourseId">
+                <a class="btn btn-default border" asp-controller="course" asp-action="index">Back</a>
+                <a class="btn btn-primary" asp-controller="course" asp-action="edit" asp-route-id="@Model.CourseId">Edit</a>
+                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete')">Delete</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="card mt-4">
+        <div class="card-header">
+            Programs
+        </div>
+        <div class="card-body">
+            @if (ViewBag.Progs != null)
+            {
+                <ul class="list-group">
+                    @foreach (var prog in ViewBag.Progs)
+                    {
+                        <li class="list-group-item"><a asp-controller="programme" asp-action="details" asp-route-id="@prog.Programme.ProgrammeId">@prog.Programme.Name</a></li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <h6>None at the moment</h6>
+            }
+        </div>
+
+        <div class="card-header">
+            <form method="post" asp-controller="course" asp-action="remove" asp-route-id="@Model.CourseId">
+                <a class="btn btn-default border" asp-controller="course" asp-action="index">Back</a>
+            </form>
+        </div>
+    </div>

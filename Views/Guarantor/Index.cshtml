@@ -1,0 +1,44 @@
+﻿@model IEnumerable<Guarantor>
+@inject IEmployeeRepository _empRepository
+
+@{
+    ViewBag.Title = "Guarantors List";
+}
+
+
+<div class="card mb-4" style="width: 100%;">
+    <div class="card-header bg-primary ">
+        All Guarantors
+    </div>
+    <div class="card-body text-center">
+
+        <div class="text-right p3 mb-3 p-auto">
+            <a asp-controller="Guarantor" asp-action="AddGuarantor" class=" btn btn-primary" style="width: auto">Add Guarantor</a>
+        </div>
+
+        <div class="row">
+            <div class="table-responsive-sm col-md-12">
+                <table id="example" class="table table-striped table-bordered table-hover" style="width: 100%">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Student ID</th>
+                            <th>Phone</th>
+                            <th>Doc Url</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+
+                </table>
+                `
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        exampleLoad("/guarantor/getall/", ["name", "studentId", "phone", "docUrl", "id"], "guarantor");
+        ex();
+    </script>
+}

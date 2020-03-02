@@ -1,0 +1,17 @@
+﻿.btn {
+    width: 75px;
+}
+
+#btns {
+    display: inline !important;
+}
+
+#btns .btn {
+    width: 55px !important;
+    padding: 0 !important;
+    font-size: 14px;
+}
+
+.card-img-top {
+    max-width: 200px;
+}

@@ -1,0 +1,46 @@
+﻿@model BatchDetailsViewModel
+
+@{
+    ViewBag.Title = "Course Details";
+    ViewBag.controller = "guarantor";
+}
+
+<div class="card">
+    <div class="card-header">
+        @Model.Name
+    </div>
+    <div class="card-body">
+        <h4 class="card-title">By @Model.Supervisor</h4>
+        <h6>Start Date Code: @Model.StartDate</h6>
+        <h6>End Date: @Model.EndDate</h6>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                Program(s) In This Batch
+            </div>
+            <div class="card-body">
+                @if (Model.Prog != null)
+                {
+                    <a asp-controller="programme" asp-action="details" asp-route-id="@Model.Prog.ProgrammeId">@Model.Prog.Name</a>
+                }
+                else
+                {
+                    <h5>None at the moment</h5>
+                }
+            </div>
+            <div class="card-footer">
+                <a asp-controller="batch" asp-action="ManageBatchProgram" asp-route-id="@Model.Id" class="btn btn-primary" style="width: auto">
+                    Manage Program
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-header">
+        <form method="post" asp-controller="batch" asp-action="remove" asp-route-id="@Model.Id">
+            <a class="btn btn-default border" asp-controller="course" asp-action="index">Back</a>
+            <a class="btn btn-primary" asp-controller="batch" asp-action="edit" asp-route-id="@Model.Id">Edit</a>
+            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete')">Delete</button>
+        </form>
+    </div>
+</div>

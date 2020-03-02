@@ -1,0 +1,12 @@
+﻿@model AddCourseViewModel
+
+    <form method="post" asp-action="addcourse" asp-route-id="@ViewBag.studentId">
+        <div class="form-group row">
+            <div class="form-check">
+                <label asp-for="@Model.Title" class="form-check-label">
+                </label>
+                <input asp-for="@Model.Title" checked class="form-check-input" />
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
