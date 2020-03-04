@@ -15,15 +15,6 @@ namespace EmployeeManagement.Model
         public DbSet<Course> Courses { get; set; }
         public DbSet<Programme> Programmes { get; set; }
         public DbSet<Batch> Batches { get; set; }
-
-        public DbSet<Payment> Payments { get; set; }
-        public DbSet<PaymentDetails> PaymentDetails { get; set; }
-        public DbSet<Company> Companies { get; set; }
-        public DbSet<Employment> Employments { get; set; }
-        public DbSet<Salary> Salaries { get; set; }
-
-
-
         public DbSet<StudentCourse> StudentCourses { get; set; }
         public DbSet<ProgrammeCourse> ProgrammeCourses { get; set; }
 

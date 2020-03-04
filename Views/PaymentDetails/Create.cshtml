@@ -1,50 +1,5 @@
-﻿@model CreatePaymentDetailsViewModel
-
-<div class="container">
-    <div class="row">
-        <form method="post" style="width: 100%">
-            @if (Model.PaymentId == 0)
-            {
-                <div class="form-group">
-                    <label asp-for="PaymentId" class="col-form-label"></label>
-                    <div>
-                        <input asp-for="PaymentId" class="form-control" />
-                        <span asp-validation-for="PaymentId"></span>
-                    </div>
-                </div>
-            }
-            else
-            {
-                <div class="form-group">
-                    <label asp-for="Payment" class="col-form-label"></label>
-                    <div>
-                        <input asp-for="PaymentId" type="hidden" class="form-control" />
-                        <span asp-validation-for="PaymentId"></span>
-                    </div>
-                </div>
-            }
-
-            <div class="form-group">
-                <label asp-for="AmountPaid"></label>
-                <div>
-                    <input asp-for="AmountPaid" class="form-control" />
-                    <span asp-validation-for="AmountPaid"></span>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="Date"></label>
-                <div>
-                    <input asp-for="Date" class="form-control" />
-                    <span asp-validation-for="Date"></span>
-                </div>
-            </div>
-
-            <div class="form-group row">
-                <button type="submit" class="btn btn-primary">Add</button>
-                <a asp-action="Index" class="btn btn-default border ml-4">Cancel</a>
-            </div>
-        </form>
-    </div>
-</div>
-
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}

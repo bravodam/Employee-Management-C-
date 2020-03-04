@@ -1,24 +1,5 @@
-﻿@model Payment
-
-<div class="container">
-    <div class="row">
-        <form method="post" style="width: 100%">
-            <input asp-for="PaymentId" type="hidden" class="form-control" />
-            <input asp-for="StudentId" type="hidden" class="form-control" />
-
-            <div class="form-group">
-                <label asp-for="Total"></label>
-                <div>
-                    <input asp-for="Total" class="form-control" />
-                    <span asp-validation-for="Total"></span>
-                </div>
-            </div>
-
-            <div class="form-group row">
-                <button type="submit" class="btn btn-primary">Update</button>
-                <a asp-action="Index" class="btn btn-default border ml-4">Cancel</a>
-            </div>
-        </form>
-    </div>
-</div>
-
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}

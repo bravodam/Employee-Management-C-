@@ -4,14 +4,16 @@ using EmployeeManagement.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EmployeeManagement.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200304125911_AddPyPdRel")]
+    partial class AddPyPdRel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -105,6 +107,50 @@ namespace EmployeeManagement.Migrations
                     b.ToTable("Guarantors");
                 });
 
+            modelBuilder.Entity("EmployeeManagement.Model.Payment", b =>
+                {
+                    b.Property<int>("PaymentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("StudentId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Total")
+                        .HasColumnType("float");
+
+                    b.HasKey("PaymentId");
+
+                    b.HasIndex("StudentId")
+                        .IsUnique();
+
+                    b.ToTable("Payment");
+                });
+
+            modelBuilder.Entity("EmployeeManagement.Model.PaymentDetails", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<double>("AmountPaid")
+                        .HasColumnType("float");
+
+                    b.Property<DateTimeOffset>("Date")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<int>("PaymentId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PaymentId");
+
+                    b.ToTable("PaymentDetails");
+                });
+
             modelBuilder.Entity("EmployeeManagement.Model.Programme", b =>
                 {
                     b.Property<int>("ProgrammeId")
@@ -170,6 +216,9 @@ namespace EmployeeManagement.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
 
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
                     b.HasKey("StudentId");
 
                     b.HasIndex("BatchId");
@@ -212,6 +261,24 @@ namespace EmployeeManagement.Migrations
                     b.HasOne("EmployeeManagement.Model.Programme", "Programme")
                         .WithMany("Batches")
                         .HasForeignKey("ProgrammeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("EmployeeManagement.Model.Payment", b =>
+                {
+                    b.HasOne("EmployeeManagement.Model.Student", "Student")
+                        .WithOne("Payment")
+                        .HasForeignKey("EmployeeManagement.Model.Payment", "StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("EmployeeManagement.Model.PaymentDetails", b =>
+                {
+                    b.HasOne("EmployeeManagement.Model.Payment", "Payment")
+                        .WithMany("DetailsOfPayment")
+                        .HasForeignKey("PaymentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

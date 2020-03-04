@@ -20,8 +20,6 @@
     <Folder Include="Views\Student\" />
     <Folder Include="Views\Batch\" />
     <Folder Include="Views\Programme\" />
-    <Folder Include="Views\Payment\" />
-    <Folder Include="Views\PaymentDetails\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.1" />

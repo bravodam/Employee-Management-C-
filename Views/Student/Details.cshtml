@@ -35,34 +35,10 @@
                     <div class="card-header m-2">
                         Batch: @Model.Batch.Name
                     </div>
-                    <div class="card-header m-2">
-                        Student Type: @Model.Type
-                    </div>
-                    <div class="card-header m-2">
-                        Student Status: @Model.Status
-                    </div>
-                    <div class="card-header m-2">
-                        <p>
-                            @if (Model.Payment != null)
-                            {
-                                <span>Student Payment: @Model.Payment.Total <span><a asp-action="Edit" asp-controller="Payment" asp-route-id="@Model.Payment.PaymentId" class="btn btn-primary" style="width: auto; float: right">Edit</a></span></span>
-                            }
-                            else
-                            {
-                                <span>Student Payment: Not Specified <a asp-action="Create" asp-controller="Payment" asp-route-id="@Model.StudentId" class="btn btn-primary" style="width: auto; float: right">Add</a></span>
-                            }
-                        </p>
-                    </div>
                 </div>
             </div>
 
             <div class="card">
-                <div class="card-header">
-
-                </div>
-            </div>
-
-            <div class="card mt-4">
                 <div class="card-header">
                     <h5>Guarantor(s)</h5>
                 </div>
@@ -100,7 +76,7 @@
                     <ul class="list-group">
                         @foreach (var course in ViewBag.courses)
                         {
-                            <li class="list-group-item"><a class="text-dark" asp-action="details" asp-controller="course" asp-route-id="@course.CourseId">@_empRepository.GetCourse(course.CourseId).Title</a></li>
+                        <li class="list-group-item"><a class="text-dark" asp-action="details" asp-controller="course" asp-route-id="@course.CourseId">@_empRepository.GetCourse(course.CourseId).Title</a></li>
                         }
                     </ul>
                 }
@@ -118,41 +94,15 @@
                 </a>
             </div>
         </div>
-
-        <div class="card mt-4">
-            @if (Model.Payment != null)
-            {
-                <div class="card-header">
-                    <span>Payments Made</span>
-                    <span class="float-right"><a class="btn btn-primary" style="width: auto" asp-action="create" asp-controller="paymentdetails" asp-route-id="@Model.Payment.PaymentId">Add Payment</a></span>
-                </div>
-                <div class="card-body">
-                    <table class="table table-responsive table-striped">
-                        <thead>
-                            <tr>
-                                <th>Amount</th>
-                                <th>Date</th>
-                            </tr>
-                        </thead>
-                        @foreach (var detail in Model.Payment.DetailsOfPayment)
-                        {
-                            <tr>
-                                <td>@detail.AmountPaid</td>
-                                <td>@detail.Date</td>
-                            </tr>
-                        }
-                    </table>
-                </div>
-            }
-        </div>
     </div>
 
-    <div class="card-footer">
-        <form method="post" asp-controller="student" asp-action="remove" asp-route-id="@Model.StudentId">
-            <a asp-controller="student" asp-action="index" class="btn btn-primary">Back</a>
-            <a asp-controller="student" asp-action="edit" asp-route-id="@Model.StudentId" class="btn btn-primary">Edit</a>
-            <button class="btn btn-danger" type="submit" onclick="return confirm('Are you sure you want to delete')">Delete</button>
-        </form>
+        <div class="card-footer">
+            <form method="post" asp-controller="student" asp-action="remove" asp-route-id="@Model.StudentId">
+                <a asp-controller="student" asp-action="index" class="btn btn-primary">Back</a>
+                <a asp-controller="student" asp-action="edit" asp-route-id="@Model.StudentId" class="btn btn-primary">Edit</a>
+                <button class="btn btn-danger" type="submit" onclick="return confirm('Are you sure you want to delete')">Delete</button>
+            </form>
+        </div>
     </div>
 </div>
 
