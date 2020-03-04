@@ -1,7 +1,9 @@
 ﻿using System;
+using EmployeeManagement.Model;
+
 namespace EmployeeManagement.ViewModels
 {
-    public class CreatePaymentDetailsViewModel
+    public class CreatePaymentDetailsViewModel : PaymentDetails
     {
         public CreatePaymentDetailsViewModel()
         {
