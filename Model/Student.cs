@@ -30,6 +30,14 @@ namespace EmployeeManagement.Model
         public int? BatchId { get; set; }
         public Batch Batch { get; set; }
 
+        public Status Status { get; set; }
+
+        public Payment Payment { get; set; }
+
+        public StudentType Type { get; set; }
+
+        public Employment Employment { get; set; }
+
         public Student()
         {
         }

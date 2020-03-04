@@ -1,0 +1,42 @@
+﻿@model CreatePaymentViewModel
+
+<div class="container">
+    <div class="row">
+        <form method="post" style="width: 100%">
+            @if (Model.StudentId == 0)
+            {
+                <div class="form-group">
+                    <label asp-for="StudentId" class="col-form-label"></label>
+                    <div>
+                        <input asp-for="StudentId" class="form-control" />
+                        <span asp-validation-for="StudentId"></span>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="form-group">
+                    <label asp-for="StudentId" class="col-form-label"></label>
+                    <div>
+                        <input asp-for="StudentId" type="hidden" class="form-control" />
+                        <span asp-validation-for="StudentId"></span>
+                    </div>
+                </div>
+            }
+
+            <div class="form-group">
+                <label asp-for="Total"></label>
+                <div>
+                    <input asp-for="Total" class="form-control" />
+                    <span asp-validation-for="Total"></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <button type="submit" class="btn btn-primary">Add</button>
+                <a asp-action="Index" class="btn btn-default border ml-4">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+

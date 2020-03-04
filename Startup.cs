@@ -32,6 +32,8 @@ namespace EmployeeManagement
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(_config.GetConnectionString("StudentDBConnection")));
             services.AddMvc(option => option.EnableEndpointRouting = false);
             services.AddScoped<IEmployeeRepository, DbEmployeeRepo>();
+            services.AddScoped<IPayment, PaymentRepo>();
+
             services.AddRazorPages().AddRazorRuntimeCompilation();
         }
 

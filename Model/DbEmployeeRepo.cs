@@ -38,6 +38,8 @@ namespace EmployeeManagement.Model
         {
             return _db.Students
                 .Include(s => s.Batch)
+                .Include(s => s.Payment)
+                .Include(s => s.Payment.DetailsOfPayment)
                 .FirstOrDefault(s => s.StudentId == Id);
         }
 
