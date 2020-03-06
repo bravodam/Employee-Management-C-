@@ -22,6 +22,9 @@
     <Folder Include="Views\Programme\" />
     <Folder Include="Views\Payment\" />
     <Folder Include="Views\PaymentDetails\" />
+    <Folder Include="Views\Company\" />
+    <Folder Include="Views\Employment\" />
+    <Folder Include="Views\Project\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.1" />

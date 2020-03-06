@@ -129,8 +129,7 @@ namespace EmployeeManagement.Migrations
 
                     b.HasIndex("CompanyId");
 
-                    b.HasIndex("StudentId")
-                        .IsUnique();
+                    b.HasIndex("StudentId");
 
                     b.ToTable("Employments");
                 });
@@ -244,6 +243,32 @@ namespace EmployeeManagement.Migrations
                     b.ToTable("ProgrammeCourses");
                 });
 
+            modelBuilder.Entity("EmployeeManagement.Model.Project", b =>
+                {
+                    b.Property<int>("ProjectId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("GitUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("StudentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ProjectId");
+
+                    b.ToTable("Projects");
+                });
+
             modelBuilder.Entity("EmployeeManagement.Model.Salary", b =>
                 {
                     b.Property<int>("Id")
@@ -285,7 +310,7 @@ namespace EmployeeManagement.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("BatchId")
+                    b.Property<int>("BatchId")
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
@@ -309,9 +334,37 @@ namespace EmployeeManagement.Migrations
 
                     b.HasKey("StudentId");
 
+                    b.ToTable("Students");
+                });
+
+            modelBuilder.Entity("EmployeeManagement.Model.StudentBatch", b =>
+                {
+                    b.Property<int>("StudentId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BatchId")
+                        .HasColumnType("int");
+
+                    b.HasKey("StudentId", "BatchId");
+
                     b.HasIndex("BatchId");
 
-                    b.ToTable("Students");
+                    b.ToTable("StudentBatches");
+                });
+
+            modelBuilder.Entity("EmployeeManagement.Model.StudentCompany", b =>
+                {
+                    b.Property<int>("StudentId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("int");
+
+                    b.HasKey("StudentId", "CompanyId");
+
+                    b.HasIndex("CompanyId");
+
+                    b.ToTable("StudentCompanies");
                 });
 
             modelBuilder.Entity("EmployeeManagement.Model.StudentCourse", b =>
@@ -344,6 +397,21 @@ namespace EmployeeManagement.Migrations
                     b.ToTable("StudentGuarantor");
                 });
 
+            modelBuilder.Entity("EmployeeManagement.Model.StudentProject", b =>
+                {
+                    b.Property<int>("StudentId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("int");
+
+                    b.HasKey("StudentId", "ProjectId");
+
+                    b.HasIndex("ProjectId");
+
+                    b.ToTable("StudentProjects");
+                });
+
             modelBuilder.Entity("EmployeeManagement.Model.Batch", b =>
                 {
                     b.HasOne("EmployeeManagement.Model.Programme", "Programme")
@@ -356,14 +424,14 @@ namespace EmployeeManagement.Migrations
             modelBuilder.Entity("EmployeeManagement.Model.Employment", b =>
                 {
                     b.HasOne("EmployeeManagement.Model.Company", "Company")
-                        .WithMany()
+                        .WithMany("Employments")
                         .HasForeignKey("CompanyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("EmployeeManagement.Model.Student", "Student")
-                        .WithOne("Employment")
-                        .HasForeignKey("EmployeeManagement.Model.Employment", "StudentId")
+                        .WithMany()
+                        .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -410,11 +478,34 @@ namespace EmployeeManagement.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("EmployeeManagement.Model.Student", b =>
+            modelBuilder.Entity("EmployeeManagement.Model.StudentBatch", b =>
                 {
                     b.HasOne("EmployeeManagement.Model.Batch", "Batch")
-                        .WithMany("StudentsInBatch")
-                        .HasForeignKey("BatchId");
+                        .WithMany("StudentBatches")
+                        .HasForeignKey("BatchId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EmployeeManagement.Model.Student", "Student")
+                        .WithMany("StudentBatches")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("EmployeeManagement.Model.StudentCompany", b =>
+                {
+                    b.HasOne("EmployeeManagement.Model.Company", "Company")
+                        .WithMany("StudentCompanies")
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EmployeeManagement.Model.Student", "Student")
+                        .WithMany("StudentCompanies")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("EmployeeManagement.Model.StudentCourse", b =>
@@ -442,6 +533,21 @@ namespace EmployeeManagement.Migrations
 
                     b.HasOne("EmployeeManagement.Model.Student", "Student")
                         .WithMany("StudentGuarantors")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("EmployeeManagement.Model.StudentProject", b =>
+                {
+                    b.HasOne("EmployeeManagement.Model.Project", "Project")
+                        .WithMany("StudentProjects")
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EmployeeManagement.Model.Student", "Student")
+                        .WithMany("StudentProjects")
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

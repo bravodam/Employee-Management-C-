@@ -1,4 +1,4 @@
-﻿using System;
+﻿    using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -37,7 +37,8 @@ namespace EmployeeManagement.Model
         public Student GetStudent(int Id)
         {
             return _db.Students
-                .Include(s => s.Batch)
+                .Include(s => s.StudentBatches)
+                .Include(s => s.StudentProjects)
                 .Include(s => s.Payment)
                 .Include(s => s.Payment.DetailsOfPayment)
                 .FirstOrDefault(s => s.StudentId == Id);
@@ -182,7 +183,7 @@ namespace EmployeeManagement.Model
 
         public IEnumerable<Batch> GetAllBatches()
         {
-            return _db.Batches.Include(b => b.Programme).Include(b => b.StudentsInBatch);
+            return _db.Batches.Include(b => b.Programme).Include(b => b.StudentBatches);
         }
 
         public Batch GetBatch(int id)

@@ -12,15 +12,20 @@ namespace EmployeeManagement.Model
         public DbSet<Student> Students { get; set; }
         public DbSet<Guarantor> Guarantors { get; set; }
         public DbSet<StudentGuarantor> StudentGuarantor { get; set; }
+        public DbSet<StudentBatch> StudentBatches { get; set; }
+
         public DbSet<Course> Courses { get; set; }
         public DbSet<Programme> Programmes { get; set; }
         public DbSet<Batch> Batches { get; set; }
+        public DbSet<StudentCompany> StudentCompanies { get; set; }
+        public DbSet<StudentProject> StudentProjects { get; set; }
 
         public DbSet<Payment> Payments { get; set; }
         public DbSet<PaymentDetails> PaymentDetails { get; set; }
         public DbSet<Company> Companies { get; set; }
         public DbSet<Employment> Employments { get; set; }
         public DbSet<Salary> Salaries { get; set; }
+        public DbSet<Project> Projects { get; set; }
 
 
 
@@ -84,14 +89,51 @@ namespace EmployeeManagement.Model
 
 
             ///* Batch Student Relationship */
-            modelBuilder.Entity<Student>()
+            modelBuilder.Entity<StudentBatch>()
+             .HasKey(x => new { x.StudentId, x.BatchId });
+
+            modelBuilder.Entity<StudentBatch>()
+                .HasOne(sg => sg.Student)
+                .WithMany(sg => sg.StudentBatches)
+                .HasForeignKey(sg => sg.StudentId);
+
+            modelBuilder.Entity<StudentBatch>()
                 .HasOne(sg => sg.Batch)
-                .WithMany(sg => sg.StudentsInBatch);
+                .WithMany(sg => sg.StudentBatches)
+                .HasForeignKey(sg => sg.BatchId);
 
             ///* Batch Programme Relationship */
             modelBuilder.Entity<Batch>()
                 .HasOne(sg => sg.Programme)
                 .WithMany(sg => sg.Batches);
+
+            ///* Company Student Relationship */
+            modelBuilder.Entity<StudentCompany>()
+             .HasKey(x => new { x.StudentId, x.CompanyId });
+
+            modelBuilder.Entity<StudentCompany>()
+                .HasOne(sg => sg.Student)
+                .WithMany(sg => sg.StudentCompanies)
+                .HasForeignKey(sg => sg.StudentId);
+
+            modelBuilder.Entity<StudentCompany>()
+                .HasOne(sg => sg.Company)
+                .WithMany(sg => sg.StudentCompanies)
+                .HasForeignKey(sg => sg.CompanyId);
+
+            ///* Project Student Relationship */
+            modelBuilder.Entity<StudentProject>()
+             .HasKey(x => new { x.StudentId, x.ProjectId });
+
+            modelBuilder.Entity<StudentProject>()
+                .HasOne(sg => sg.Student)
+                .WithMany(sg => sg.StudentProjects)
+                .HasForeignKey(sg => sg.StudentId);
+
+            modelBuilder.Entity<StudentProject>()
+                .HasOne(sg => sg.Project)
+                .WithMany(sg => sg.StudentProjects)
+                .HasForeignKey(sg => sg.ProjectId);
         }
 
     }

@@ -44,7 +44,7 @@ namespace EmployeeManagement.Controllers
             if (ModelState.IsValid)
             {
                 _payment.AddPayment(payment);
-                return RedirectPermanent("Index");
+                return RedirectToAction("Index");
             }
             return View();
         }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace EmployeeManagement.Model
@@ -18,9 +19,16 @@ namespace EmployeeManagement.Model
         public string Address { get; set; }
 
         [Required]
+        [Display(Name = "Contact Name")]
         public string ContactName { get; set; }
 
         [Required]
+        [Display(Name = "Contact Email")]
         public string ContactEmail { get; set; }
+
+        public List<Employment> Employments { get; set; }
+
+        public List<StudentCompany> StudentCompanies { get; set; }
+
     }
 }

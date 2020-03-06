@@ -23,12 +23,16 @@ namespace EmployeeManagement.Model
         [Required]
         public string Age { get; set; }
 
+        [Required]
+        public int BatchId { get; set; }
+
         public List<StudentGuarantor> StudentGuarantors { get; set; }
 
         public List<StudentCourse> StudentCourses { get; set; }
 
-        public int? BatchId { get; set; }
-        public Batch Batch { get; set; }
+        
+
+        public List<StudentBatch> StudentBatches { get; set; }
 
         public Status Status { get; set; }
 
@@ -36,7 +40,11 @@ namespace EmployeeManagement.Model
 
         public StudentType Type { get; set; }
 
-        public Employment Employment { get; set; }
+
+        public List<StudentCompany> StudentCompanies { get; set; }
+
+        public List<StudentProject> StudentProjects { get; set; }
+
 
         public Student()
         {

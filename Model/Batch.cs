@@ -21,6 +21,7 @@ namespace EmployeeManagement.Model
         public Programme Programme { get; set; }
 
 
-        public List<Student> StudentsInBatch { get; set; }
+        //public List<Student> StudentsInBatch { get; set; }
+        public List<StudentBatch> StudentBatches { get; set; }
     }
 }

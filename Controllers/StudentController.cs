@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,11 +16,13 @@ namespace EmployeeManagement.Controllers
     {
         private readonly IEmployeeRepository _employeeRepository;
         private readonly AppDbContext _db;
+        private readonly IProject _project;
 
-        public StudentController(IEmployeeRepository employeeRepo, AppDbContext db)
+        public StudentController(IEmployeeRepository employeeRepo, AppDbContext db, IProject project)
         {
             _employeeRepository = employeeRepo;
             _db = db;
+            _project = project;
         }
         //INDEX
         // GET: /<controller>/
@@ -75,29 +78,55 @@ namespace EmployeeManagement.Controllers
             {
                 var newStudent = _employeeRepository.AddStudent(student);
 
-                Batch studentBatch = _db.Students
-                    .Include(s => s.Batch).FirstOrDefault(s => s.StudentId == newStudent.StudentId).Batch;
-
-                var studentBatchProgram = _db.ProgrammeCourses
-                    .Include(pc => pc.Course).Where(pc => pc.ProgrammeId == studentBatch.ProgrammeId);
-
-                
-
-                if (studentBatchProgram != null)
+                StudentBatch studentBatch = new StudentBatch
                 {
-                    var list = new List<StudentCourse>();
-                    foreach (var p in studentBatchProgram)
-                    {
-                        var sc = new StudentCourse
-                        {
-                            CourseId = p.CourseId,
-                            StudentId = newStudent.StudentId
-                        };
+                    BatchId = newStudent.BatchId,
+                    StudentId = newStudent.StudentId
+                };
 
-                        list.Add(sc);
+                //var result = _db.StudentBatches.Add(studentBatch);
+                var result = _db.StudentBatches.Add(
+                        new StudentBatch
+                        {
+                            BatchId = newStudent.BatchId,
+                            StudentId = newStudent.StudentId
+                        }
+                    );
+
+                await _db.SaveChangesAsync();
+
+                var batches = _db.StudentBatches
+                    .Include(s => s.Batch).Where(s => s.StudentId == newStudent.StudentId).ToList();
+
+                //var programs = _db.StudentBatches
+                //    .Include(b => b.Batch)
+                //    .Where(b => b.BatchId == newStudent.BatchId).ToList();
+
+                if (batches != null)
+                {
+                    var programs = new List<Programme>();
+                    var list = new List<StudentCourse>();
+
+                    foreach (var batch in batches)
+                    {
+                        programs.Add(_db.Programmes.Include(p => p.ProgrammeCourses).FirstOrDefault(p => p.ProgrammeId == batch.Batch.ProgrammeId));
                     }
-                    
-                    foreach(var itm in list)
+
+                    foreach (var program in programs)
+                    {
+                        foreach(var course in program.ProgrammeCourses)
+                        {
+                            var sc = new StudentCourse
+                            {
+                                CourseId = course.CourseId,
+                                StudentId = newStudent.StudentId
+                            };
+
+                            list.Add(sc);
+                        }
+                    }
+
+                    foreach (var itm in list)
                     {
                         _db.StudentCourses.Add(itm);
                         await _db.SaveChangesAsync();
@@ -109,7 +138,7 @@ namespace EmployeeManagement.Controllers
 
             return View();
         }
-        
+
         //ADDCOURSE
         [HttpGet]
         public IActionResult AddCourse(int id)
@@ -145,18 +174,31 @@ namespace EmployeeManagement.Controllers
         public IActionResult Details(int id)
         {
             Student student = _employeeRepository.GetStudent(id);
-            var studentCourses = _db.StudentCourses.ToList();
+            var studentCourses = _db.StudentCourses.Include(c => c.Course).ToList();
 
 
             if (student != null)
             {
+
+                StudentDetailsViewModel model = new StudentDetailsViewModel
+                {
+                    Name = student.Name,
+                    Email = student.Email,
+                    Gender = student.Gender,
+                    Age = student.Age,
+                    BatchId = student.BatchId,
+                    Status = student.Status,
+                    Type = student.Type,
+                    StudentId = student.StudentId,
+                    Projects = _project.GetStudentProjectByStudentId(student.StudentId)
+                };
                 var courses = studentCourses.FindAll(c => c.StudentId == id);
 
                 var guarantors = _employeeRepository.GetAllGuarantors();
                 var list = guarantors.ToList();
                 ViewBag.studentGuarantors = list.FindAll(g => g.StudentId == id);
                 ViewBag.courses = courses;
-                return View(student);
+                return View(model);
             }
             return RedirectToAction("Index");
         }

@@ -1,4 +1,4 @@
-﻿@model Student
+﻿@model StudentDetailsViewModel
 @inject IEmployeeRepository _empRepository
 
 @{
@@ -7,7 +7,7 @@
     ViewBag.employees = _emp.GetAllEmployees().Count();
 }
 
-<div class="row justify-content-center m-3 card">
+<div class="row justify-content-center mt-3 card">
     <div class="col-sm-12">
         <div class="card">
             <div class="card-header">
@@ -33,7 +33,21 @@
                         Age: @Model.Age
                     </div>
                     <div class="card-header m-2">
-                        Batch: @Model.Batch.Name
+                        <h4>Batches</h4>
+                        <hr />
+                        @if (Model.StudentBatches != null)
+                        {
+                            <ol>
+                                @foreach (var batch in Model.StudentBatches)
+                                {
+                                    <li><a>@_empRepository.GetBatch(batch.BatchId).Name</a></li>
+                                }
+                            </ol>
+                        }
+                        else
+                        {
+                            <h4>None At The Moment</h4>
+                        }
                     </div>
                     <div class="card-header m-2">
                         Student Type: @Model.Type
@@ -103,6 +117,34 @@
                             <li class="list-group-item"><a class="text-dark" asp-action="details" asp-controller="course" asp-route-id="@course.CourseId">@_empRepository.GetCourse(course.CourseId).Title</a></li>
                         }
                     </ul>
+                }
+                else
+                {
+                    <p>None at the moment</p>
+                }
+            </div>
+            <div class="card-footer">
+                <a asp-controller="student" asp-action="addcourse" asp-route-id="@Model.StudentId" class="btn btn-primary" style="width: auto; font-size: 10px">
+                    Add Course
+                </a>
+                <a href="#" class="btn btn-danger" style="width: auto; font-size: 10px">
+                    Remove Course
+                </a>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5>Projects</h5>
+            </div>
+            <div class="card-body">
+                @if (Model.Projects != null && Model.Projects.Count > 0)
+                {
+                        @foreach (var project in Model.Projects)
+                        {
+                            <h6><a class="text-dark" asp-action="details" asp-controller="course" asp-route-id="@project.ProjectId">@project.Project.Title</a></h6>
+                            <span><a href="#">@project.Project.GitUrl</a></span>
+                        }
                 }
                 else
                 {

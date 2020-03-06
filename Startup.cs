@@ -33,6 +33,9 @@ namespace EmployeeManagement
             services.AddMvc(option => option.EnableEndpointRouting = false);
             services.AddScoped<IEmployeeRepository, DbEmployeeRepo>();
             services.AddScoped<IPayment, PaymentRepo>();
+            services.AddScoped<ICompany, CompanyRepo>();
+            services.AddScoped<IEmployment, EmploymentRepo>();
+            services.AddScoped<IProject, ProjectRepo>();
 
             services.AddRazorPages().AddRazorRuntimeCompilation();
         }

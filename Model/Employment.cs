@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+
 namespace EmployeeManagement.Model
 {
     public class Employment
@@ -15,6 +17,8 @@ namespace EmployeeManagement.Model
         public int StudentId { get; set; }
         public Student Student { get; set; }
 
+        [Required]
+        [Display(Name = "Start Date")]
         public DateTimeOffset StartDate { get; set; }
 
         public DateTimeOffset EndDate { get; set; }
