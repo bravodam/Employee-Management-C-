@@ -135,7 +135,7 @@
 
         <div class="card mt-4">
             <div class="card-header">
-                <h5>Projects</h5>
+                <h5>Projects <span class="float-right"><a class="btn btn-primary" style="width: auto" asp-controller="project" asp-action="create" asp-route-id="@Model.StudentId">Add Project</a></span></h5>
             </div>
             <div class="card-body">
                 @if (Model.Projects != null && Model.Projects.Count > 0)
