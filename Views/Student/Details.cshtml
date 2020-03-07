@@ -46,7 +46,7 @@
                         }
                         else
                         {
-                            <h4>None At The Moment</h4>
+                            <p>None At The Moment</p>
                         }
                     </div>
                     <div class="card-header m-2">
@@ -142,7 +142,7 @@
                 {
                         @foreach (var project in Model.Projects)
                         {
-                            <h6><a class="text-dark" asp-action="details" asp-controller="course" asp-route-id="@project.ProjectId">@project.Project.Title</a></h6>
+                            <h6><a class="text-dark" asp-action="details" asp-controller="project" asp-route-id="@project.ProjectId">@project.Project.Title</a></h6>
                             <span><a href="#">@project.Project.GitUrl</a></span>
                         }
                 }

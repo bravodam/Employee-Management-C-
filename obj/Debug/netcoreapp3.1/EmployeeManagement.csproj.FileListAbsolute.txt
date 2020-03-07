@@ -757,3 +757,4 @@
 /Users/ogbaragodwin/Desktop/code360/EmployeeManagement/EmployeeManagement/obj/Debug/netcoreapp3.1/Razor/Views/Company/Details.cshtml.g.cs
 /Users/ogbaragodwin/Desktop/code360/EmployeeManagement/EmployeeManagement/obj/Debug/netcoreapp3.1/Razor/Views/Project/Create.cshtml.g.cs
 /Users/ogbaragodwin/Desktop/code360/EmployeeManagement/EmployeeManagement/obj/Debug/netcoreapp3.1/Razor/Views/Project/Index.cshtml.g.cs
+/Users/ogbaragodwin/Desktop/code360/EmployeeManagement/EmployeeManagement/obj/Debug/netcoreapp3.1/Razor/Views/Project/Details.cshtml.g.cs

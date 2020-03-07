@@ -25,6 +25,8 @@ namespace EmployeeManagement.Controllers
             return View();
         }
 
+
+        // CREATE
         [HttpGet]
         public IActionResult Create(int? id)
         {
@@ -66,6 +68,19 @@ namespace EmployeeManagement.Controllers
                 
             }
             return View(model);
+        }
+
+        // DETAILS
+        [HttpGet]
+        public IActionResult Details(int id)
+        {
+            var project = _project.GetProjectById(id);
+
+            if (project != null)
+            {
+                return View(project);
+            }
+            return RedirectToAction("Index");
         }
     }
 }

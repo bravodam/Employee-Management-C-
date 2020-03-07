@@ -31,7 +31,8 @@ namespace EmployeeManagement.Model
 
         public Project GetProjectById(int id)
         {
-            throw new NotImplementedException();
+            return _db.Projects.Include(p => p.StudentProjects)
+                .FirstOrDefault(p => p.ProjectId == id);
         }
 
 
