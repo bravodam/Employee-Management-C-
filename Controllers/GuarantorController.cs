@@ -22,7 +22,7 @@ namespace EmployeeManagement.Controllers
             _db = db;
         }
 
-        //INDEX
+        // INDEX
         // GET: /<controller>/
         public IActionResult Index()
         {
@@ -157,6 +157,58 @@ namespace EmployeeManagement.Controllers
         public async Task<IActionResult> GetAll()
         {
             return Json(new { data = await _db.Guarantors.ToListAsync() });
+        }
+
+
+
+
+        // FOR AJAX
+        [HttpPost]
+        public JsonResult Create(AddGuarantorViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                Guarantor guarantor = new Guarantor();
+                guarantor.Name = model.Name;
+                guarantor.StudentId = model.StudentId;
+                guarantor.Phone = model.Phone;
+                guarantor.DocUrl = model.DocUrl;
+                var newGuarantor = _employeeRepository.AddGuarantor(guarantor);
+
+                StudentGuarantor studentGuarantor = new StudentGuarantor
+                {
+                    GuarantorId = newGuarantor.ID,
+                    StudentId = model.StudentId
+                };
+                var savedSG = _db.StudentGuarantor.Add(studentGuarantor);
+                _db.SaveChanges();
+
+                if (newGuarantor == null)
+                {
+                    return Json(new { success = false, message = "Error while deletiing" });
+                }
+                else
+                {
+                    return Json(new { success = true, message = "Object saved", id = newGuarantor.StudentId });
+
+                }
+            }
+            return Json(new { success = false, message = "Invalid Submission" });
+        }
+
+        //GETALL
+        [HttpGet]
+        public async Task<IActionResult> StudentGuarantors(int id)
+        {
+            //var list = await _db.StudentGuarantor.Include(sg => sg.Guarantor).Where(sg => sg.StudentId == id).ToListAsync();
+            var list = await _db.Guarantors.Where(g => g.StudentId == id).ToListAsync();
+            //List<Guarantor> guarantors = new List<Guarantor>();
+
+            //foreach (var sg in list)
+            //{
+            //    guarantors.Add(sg.Guarantor);
+            //}
+            return Json(new { data = list });
         }
     }
 }
