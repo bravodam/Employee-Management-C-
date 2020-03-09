@@ -159,6 +159,12 @@ namespace EmployeeManagement.Controllers
             return Json(new { data = await _db.Guarantors.ToListAsync() });
         }
 
+        // ALLSTUDENTGUARANTOR
+        [HttpGet]
+        public async Task<IActionResult> AllStudentGuarantors()
+        {
+            return Json(new { data = await _db.StudentGuarantor.ToListAsync() });
+        }
 
 
 
@@ -189,7 +195,7 @@ namespace EmployeeManagement.Controllers
                 }
                 else
                 {
-                    return Json(new { success = true, message = "Object saved", id = newGuarantor.StudentId });
+                    return Json(new { success = true, message = "Object saved", type = "guarantor", id = newGuarantor.StudentId });
 
                 }
             }
@@ -200,15 +206,26 @@ namespace EmployeeManagement.Controllers
         [HttpGet]
         public async Task<IActionResult> StudentGuarantors(int id)
         {
-            //var list = await _db.StudentGuarantor.Include(sg => sg.Guarantor).Where(sg => sg.StudentId == id).ToListAsync();
-            var list = await _db.Guarantors.Where(g => g.StudentId == id).ToListAsync();
-            //List<Guarantor> guarantors = new List<Guarantor>();
 
-            //foreach (var sg in list)
-            //{
-            //    guarantors.Add(sg.Guarantor);
-            //}
-            return Json(new { data = list });
+            var list = await _db.Guarantors.Where(g => g.StudentId == id).ToListAsync();
+           
+            return Json(new { data = await _db.StudentGuarantor.Where(g => g.StudentId == id).Select(sg => sg.Guarantor).ToListAsync() });
+        }
+
+        //
+        [HttpDelete]
+        public async Task<IActionResult> Clear(int studentId, int guarantorId)
+        {
+            var guarantorToDelete = await _db.StudentGuarantor.FirstOrDefaultAsync(b => b.StudentId == studentId && b.GuarantorId == guarantorId);
+
+            if (guarantorToDelete == null)
+            {
+                return Json(new { success = false, message = "Error while deletiing" });
+            }
+            _db.StudentGuarantor.Remove(guarantorToDelete);
+            await _db.SaveChangesAsync();
+
+            return Json(new { success = true, message = "Delete Successful" });
         }
     }
 }

@@ -3,6 +3,9 @@
 function exampleLoad(url, arr, controller) {
     console.log("launched");
     var emp = "";
+    var beginner = "Beginner";
+    var intermediate = "Intermediate";
+    var advanced = "Advanced";
     $(document).ready(function () {
         console.log("ready");
 
@@ -17,19 +20,19 @@ function exampleLoad(url, arr, controller) {
                 {
                     data: arr[0],
                     "render": function (data, type, row) {
-                        return `<a href="/${controller}/details/${row[arr[4]]}">${data}</a>`;
+                        return `<a href="/${controller}/details/${row[arr[4]]}">${data || emp}</a>`;
                     }
                 },
                 {
                     data: arr[1],
                     "render": function (data, type, row) {
-                        return `<a href="/${controller}/details/${row[arr[4]]}">${data}</a>`;
+                        return `<a href="/${controller}/details/${row[arr[4]]}">${data === 1 ? beginner : data === 2 ? intermediate : data === 3 ? advanced : emp}</a>`;
                     }
                 },
                 {
                     data: arr[2],
                     "render": function (data, type, row) {
-                        return `<a href="/${controller}/details/${row[arr[4]]}">${data}</a>`;
+                        return `<a href="/${controller}/details/${row[arr[4]]}">${data || emp}</a>`;
                     }
                 },
                 {

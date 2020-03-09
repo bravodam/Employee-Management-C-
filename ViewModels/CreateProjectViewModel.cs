@@ -8,5 +8,7 @@ namespace EmployeeManagement.ViewModels
         public CreateProjectViewModel()
         {
         }
+
+        public int StudentId { get; set; }
     }
 }

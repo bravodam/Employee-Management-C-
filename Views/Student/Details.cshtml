@@ -16,13 +16,8 @@
         </div>
 
         <div class="card-body">
-            <img class="card-img-top mb-3 m-auto" src="~/images/noimage.jpg" />
-
-            <div class="card">
-                <div class="card-body">
-                    <div class="card-header m-2">
-                        ID: @Model.StudentId
-                    </div>
+            <div class="row">
+                <div class="col-md-8">
                     <div class="card-header m-2">
                         Name: @Model.Name
                     </div>
@@ -35,109 +30,102 @@
                     <div class="card-header m-2">
                         Age: @Model.Age
                     </div>
-                    <div class="card-header m-2">
-                        <h4>Batches</h4>
-                        <hr />
-                        @if (Model.StudentBatches != null)
-                        {
-                            <ol>
-                                @foreach (var batch in Model.StudentBatches)
-                                {
-                                    <li><a>@_empRepository.GetBatch(batch.BatchId).Name</a></li>
-                                }
-                            </ol>
-                        }
-                        else
-                        {
-                            <p>None At The Moment</p>
-                        }
-                    </div>
-                    <div class="card-header m-2">
-                        Student Type: @Model.Type
-                    </div>
-                    <div class="card-header m-2">
-                        Student Status: @Model.Status
-                    </div>
-                    <div class="card-header m-2">
-                        <p>
-                            @if (Model.Payment != null)
-                            {
-                                <span>Student Payment: @Model.Payment.Total <span><a asp-action="Edit" asp-controller="Payment" asp-route-id="@Model.Payment.PaymentId" class="btn btn-primary" style="width: auto; float: right">Edit</a></span></span>
-                            }
-                            else
-                            {
-                                <span>Student Payment: Not Specified <a asp-action="Create" asp-controller="Payment" asp-route-id="@Model.StudentId" class="btn btn-primary" style="width: auto; float: right">Add</a></span>
-                            }
-                        </p>
-                    </div>
+                </div>
+                <div class="col-md-4">
+                    <img class="card-img-top mb-3 m-auto" src="~/images/noimage.jpg" />
                 </div>
             </div>
 
-            <div class="card">
-                <div class="card-header">
 
-                </div>
+
+            
+            <div class="card-header m-2">
+                <h4>Batches</h4>
+                <hr />
+                @if (Model.StudentBatches != null)
+                {
+                    <ol>
+                        @foreach (var batch in Model.StudentBatches)
+                        {
+                            <li><a>@_empRepository.GetBatch(batch.BatchId).Name</a></li>
+                        }
+                    </ol>
+                }
+                else
+                {
+                    <p>None At The Moment</p>
+                }
+            </div>
+            <div class="card-header m-2">
+                Student Type: @Model.Type
+            </div>
+            <div class="card-header m-2">
+                Student Status: @Model.Status
+            </div>
+            <div class="card-header m-2">
+                <p>
+                    @if (Model.Payment != null)
+                    {
+                        <span>Student Payment: @Model.Payment.Total <span><a asp-action="Edit" asp-controller="Payment" asp-route-id="@Model.Payment.PaymentId" class="btn btn-primary" style="width: auto; float: right">Edit</a></span></span>
+                    }
+                    else
+                    {
+                        <span>Student Payment: Not Specified <a asp-action="Create" asp-controller="Payment" asp-route-id="@Model.StudentId" class="btn btn-primary" style="width: auto; float: right">Add</a></span>
+                    }
+                </p>
             </div>
 
-            <div class="card mt-4">
-                <div class="card-header">
-                    <h5>
-                        Guarantor(s)
-                        <span class="float-right">
-                            <a class="btn btn-danger" asp-controller="guarantor" asp-action="addguarantor" type="button" style="width: auto; font-size: 10px" data-toggle="modal" data-target="#createGuarantor">
-                                Add Guarantor
-                            </a>
-                        </span>
-                    </h5>
-                </div>
-                <div class="card-body" id="guarantorDiv">
-                    @*@if (ViewBag.studentGuarantors != null && ViewBag.studentGuarantors.Count > 0)
-                        {
-                            @foreach (var guarantor in ViewBag.studentGuarantors)
-                            {
-                                <p><a class="text-dark" asp-action="details" asp-controller="guarantor" asp-route-id="@guarantor.ID">@guarantor.Name</a></p>
-                            }
-                        }
-                        else
-                        {
-                            <p>None at the moment</p>
-                        }*@
-                </div>
+
+        </div>
+
+        <div class="card my-4">
+            <div class="card-header">
+                <h5>
+                    Guarantor(s)
+                    <span class="float-right">
+                        <a class="btn btn-primary" asp-controller="guarantor" asp-action="addguarantor" type="button" style="width: auto; font-size: 10px" data-toggle="modal" data-target="#createGuarantor">
+                            Add Guarantor
+                        </a>
+                    </span>
+                </h5>
+            </div>
+            <div class="card-body" id="guarantorDiv">
+                @*@if (ViewBag.studentGuarantors != null && ViewBag.studentGuarantors.Count > 0)
+                {
+                    @foreach (var guarantor in ViewBag.studentGuarantors)
+                    {
+                        <p><a class="text-dark" asp-action="details" asp-controller="guarantor" asp-route-id="@guarantor.ID">@guarantor.Name</a></p>
+                    }
+                }
+                else
+                {
+                    <p>None at the moment</p>
+                }*@
             </div>
         </div>
 
         <div class="card">
             <div class="card-header">
-                <h5>Courses</h5>
+                <h5>
+                    Courses
+
+                    <span class="float-right">
+                        <a class="btn btn-primary" style="width: auto; font-size: 10px"
+                           data-toggle="modal" data-target="#createCourse" asp-controller="course" asp-action="addcourse">
+                            Add Course
+                        </a>
+                    </span>
+                </h5>
+
             </div>
-            <div class="card-body">
-                @if (ViewBag.courses != null)
-                {
-                    <ul class="list-group">
-                        @foreach (var course in ViewBag.courses)
-                        {
-                            <li class="list-group-item"><a class="text-dark" asp-action="details" asp-controller="course" asp-route-id="@course.CourseId">@_empRepository.GetCourse(course.CourseId).Title</a></li>
-                        }
-                    </ul>
-                }
-                else
-                {
-                    <p>None at the moment</p>
-                }
-            </div>
-            <div class="card-footer">
-                <a asp-controller="student" asp-action="addcourse" asp-route-id="@Model.StudentId" class="btn btn-primary" style="width: auto; font-size: 10px">
-                    Add Course
-                </a>
-                <a href="#" class="btn btn-danger" style="width: auto; font-size: 10px">
-                    Remove Course
-                </a>
+            <div class="card-body" id="coursesDiv">
+
             </div>
         </div>
 
         <div class="card mt-4">
             <div class="card-header">
-                <h5>Projects <span class="float-right"><a class="btn btn-primary" style="width: auto" asp-controller="project" asp-action="create" asp-route-id="@Model.StudentId">Add Project</a></span></h5>
+                <h5>Projects <span class="float-right"><a class="btn btn-primary" style="width: auto; font-size: 10px" asp-controller="project" asp-action="create" asp-route-id="@Model.StudentId">Add Project</a></span></h5>
             </div>
             <div class="card-body">
                 @if (Model.Projects != null && Model.Projects.Count > 0)
@@ -201,7 +189,7 @@
 </div>
 
 
-@*MODAL*@
+@*MODALS*@
 
 <div class="modal fade" id="createGuarantor" tabindex="-1" role="dialog" aria-hidden="true" aria-labelledby="exampleModelLabel">
     <div class="modal-dialog" role="document">
@@ -257,6 +245,50 @@
     </div>
 </div>
 
+<div class="modal fade" id="createCourse" tabindex="-1" role="dialog" aria-hidden="true" aria-labelledby="exampleModelLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form method="post" class="mt-3">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add Employee</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <label for="title" class="col-sm-2 col-form-label">Title</label>
+                        <div class="col-sm-10">
+                            <input id="title" class="form-control" placeholder="Course Title" />
+                        </div>
+                    </div>
+
+                    <input asp-for="StudentId" type="hidden" class="form-control" id="studentId" placeholder="Course Code" />
+
+                    <div class="form-group row">
+                        <label for="level" class="col-sm-2 col-form-label">Level</label>
+                        <div class="col-sm-10">
+                            <select id="level" asp-items="Html.GetEnumSelectList<CourseLevel>()" class="custom-select mr-sm-2">
+                                <option value="">Please Select</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="text-danger error"></div>
+                </div>
+
+                <div class="modal-footer">
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary form-control" onclick="saveCourse(event)">Submit</button>
+                        <button type="submit" class="btn btn-default border" data-dismiss="modal">Back</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 
 @section Scripts{
     <script src="~/js/CustomScript.js"></script>
@@ -266,5 +298,6 @@
 <script language="javascript" type="text/javascript">
     window.addEventListener('DOMContentLoaded', (event) => {
         getAllGuarantors(@Model.StudentId);
+        getStudentCourses(@Model.StudentId);
     });
 </script>

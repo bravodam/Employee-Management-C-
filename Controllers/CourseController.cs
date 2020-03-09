@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using EmployeeManagement.Model;
 using EmployeeManagement.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -13,10 +14,12 @@ namespace EmployeeManagement.Controllers
     public class CourseController : Controller
     {
         private readonly IEmployeeRepository _empRepository;
+        private readonly AppDbContext _db;
 
         public CourseController(IEmployeeRepository employeeRepository, AppDbContext db)
         {
             _empRepository = employeeRepository;
+            _db = db;
         }
         // GET: /<controller>/
         public IActionResult Index()
@@ -66,9 +69,7 @@ namespace EmployeeManagement.Controllers
                 CourseEditViewModel model = new CourseEditViewModel
                 {
                     Title = course.Title,
-                    Code = course.Code,
-                    Instructor = course.Instructor,
-                    Duration = course.Duration
+                    Level = course.Level
                 };
                 return View(model);
             }
@@ -85,9 +86,6 @@ namespace EmployeeManagement.Controllers
                 if (courseToUpdate != null)
                 {
                     courseToUpdate.Title = model.Title;
-                    courseToUpdate.Code = model.Code;
-                    courseToUpdate.Instructor = model.Instructor;
-                    courseToUpdate.Duration = model.Duration;
                     courseToUpdate.Level = model.Level;
 
                     _empRepository.UpdateCourse(courseToUpdate);
@@ -141,6 +139,65 @@ namespace EmployeeManagement.Controllers
         {
             var courses = _empRepository.GetAllCourses().ToList();
             return Json(new { data = courses });
+        }
+
+        // AJAX CALLS
+        [HttpPost]
+        public JsonResult SaveAjax(CourseAjaxModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                Course course = new Course
+                {
+                    Title = model.Title,
+                    Level = model.Level
+                };
+
+                var newCourse = _empRepository.AddCourse(course);
+
+                StudentCourse studentCourse = new StudentCourse
+                {
+                    StudentId = model.StudentId,
+                    CourseId = newCourse.CourseId
+                };
+                var savedSG = _db.StudentCourses.Add(studentCourse);
+                _db.SaveChanges();
+
+                if (newCourse == null)
+                {
+                    return Json(new { success = false, message = "Error while saving" });
+                }
+                else
+                {
+                    return Json(new { success = true, message = "Object saved", type = "course", id = model.StudentId });
+
+                }
+            }
+            return Json(new { success = false, message = "Invalid Submission" });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> StudentCourses(int id)
+        {
+
+            var list = await _db.StudentCourses.Include(sg => sg.Course).Where(sg => sg.StudentId == id).Select(sg => sg.Course).ToListAsync();
+
+            return Json(new { data = await _db.StudentCourses.Include(sg => sg.Course).Where(sg => sg.StudentId == id).Select(sg => sg.Course).ToListAsync()});
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> Clear(StudentCourse model)
+        {
+            var courseToDelete = await _db.StudentCourses.FirstOrDefaultAsync(sc => sc.StudentId == model.StudentId && sc.CourseId == model.CourseId);
+
+            if (courseToDelete == null)
+            {
+                return Json(new { success = false, message = "Error while deletiing" });
+            }
+            _db.StudentCourses.Remove(courseToDelete);
+            await _db.SaveChangesAsync();
+
+            return Json(new { success = true, message = "Delete Successful" });
         }
     }
 }

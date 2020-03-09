@@ -15,13 +15,7 @@
             }
             else
             {
-                <div class="form-group">
-                    <label asp-for="StudentId" class="col-form-label"></label>
-                    <div>
-                        <input asp-for="StudentId" disabled class="form-control" />
-                        <span asp-validation-for="StudentId"></span>
-                    </div>
-                </div>
+                <input asp-for="StudentId" type="hidden" value="@Model.StudentId" disabled class="form-control" />
             }
 
             <div class="form-group">

@@ -40,14 +40,13 @@ namespace EmployeeManagement.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Project model)
+        public IActionResult Create(CreateProjectViewModel model)
         {
             if (ModelState.IsValid)
             {
                 Project project = new Project
                 {
                     Title = model.Title,
-                    StudentId = model.StudentId,
                     Description = model.Description,
                     GitUrl = model.GitUrl
                 };
@@ -57,7 +56,7 @@ namespace EmployeeManagement.Controllers
                 {
                     StudentProject studentProject = new StudentProject
                     {
-                        StudentId = savedProject.StudentId,
+                        StudentId = model.StudentId,
                         ProjectId = savedProject.ProjectId
                     };
 

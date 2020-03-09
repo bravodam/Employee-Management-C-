@@ -51,16 +51,25 @@ namespace EmployeeManagement.Controllers
         [HttpPost]
         public IActionResult Edit(EditStudentViewModel student)
         {
+
             if (ModelState.IsValid)
             {
+                var existingBatch = _employeeRepository.GetAllBatches().Where(b => b.Id == student.BatchId).FirstOrDefault(b => b.Id == student.BatchId);
+
                 Student studentToUpdated = _employeeRepository.GetStudent(student.StudentId);
                 studentToUpdated.Name = student.Name;
                 studentToUpdated.Email = student.Email;
                 studentToUpdated.Gender = student.Gender;
                 studentToUpdated.Age = student.Age;
-                _employeeRepository.UpdateStudent(studentToUpdated);
+                studentToUpdated.BatchId = student.BatchId;
+
+                if (existingBatch == null)
+                {
+                    ModelState.AddModelError("", "Batch does not exist");
+                    return View(student);
+                }
             }
-            return RedirectToAction("Index");
+            return View(student);
 
         }
 
@@ -76,6 +85,15 @@ namespace EmployeeManagement.Controllers
         {
             if (ModelState.IsValid)
             {
+
+                var existingBatch = _employeeRepository.GetAllBatches().Where(b => b.Id == student.BatchId).FirstOrDefault(b => b.Id == student.BatchId);
+
+                if (existingBatch == null)
+                {
+                    ModelState.AddModelError("", "Batch does not exist");
+                    return View(student);
+                }
+
                 var newStudent = _employeeRepository.AddStudent(student);
 
                 StudentBatch studentBatch = new StudentBatch
@@ -190,6 +208,8 @@ namespace EmployeeManagement.Controllers
                     Status = student.Status,
                     Type = student.Type,
                     StudentId = student.StudentId,
+                    Payment = student.Payment,
+                    StudentBatches = student.StudentBatches,
                     Projects = _project.GetStudentProjectByStudentId(student.StudentId)
                 };
                 var courses = studentCourses.FindAll(c => c.StudentId == id);

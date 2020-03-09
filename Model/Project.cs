@@ -16,9 +16,6 @@ namespace EmployeeManagement.Model
         public string Title { get; set; }
 
         [Required]
-        public int StudentId { get; set; }
-
-        [Required]
         public string Description { get; set; }
 
         public string GitUrl { get; set; }
