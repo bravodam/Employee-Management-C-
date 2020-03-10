@@ -90,6 +90,7 @@ namespace EmployeeManagement.Controllers
 
                 if (existingBatch == null)
                 {
+
                     ModelState.AddModelError("", "Batch does not exist");
                     return View(student);
                 }
@@ -223,7 +224,7 @@ namespace EmployeeManagement.Controllers
             return RedirectToAction("Index");
         }
 
-        //DELETE
+        // DELETE
 
         [HttpDelete]
         public JsonResult Delete(int id)
@@ -239,7 +240,7 @@ namespace EmployeeManagement.Controllers
             return Json(new { success = true, message = "Delete Successful" });
         }
 
-        //REMOVE
+        // REMOVE
         [HttpPost]
         public IActionResult Remove(int id)
         {
@@ -253,7 +254,7 @@ namespace EmployeeManagement.Controllers
         }
 
 
-        //GETALL
+        // GETALL
         [HttpGet]
         public IActionResult GetAll()
         {

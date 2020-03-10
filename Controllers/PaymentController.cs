@@ -67,5 +67,28 @@ namespace EmployeeManagement.Controllers
             }
             return View(payment);
         }
+
+        //GETALL
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            var courses = _payment.GetAllPayment().ToList();
+            return Json(new { data = courses });
+        }
+
+        //DELETE
+        [HttpDelete]
+        public JsonResult Delete(int id)
+        {
+            var courseToDelete = _payment.GetPaymentById(id);
+
+            if (courseToDelete == null)
+            {
+                return Json(new { success = false, message = "Error while deletiing" });
+            }
+            _payment.RemovePayment(courseToDelete);
+
+            return Json(new { success = true, message = "Delete Successful" });
+        }
     }
 }

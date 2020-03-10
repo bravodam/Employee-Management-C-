@@ -26,7 +26,7 @@ function exampleLoad(url, arr, controller) {
                 {
                     data: arr[1],
                     "render": function (data, type, row) {
-                        return `<a href="/${controller}/details/${row[arr[4]]}">${data === 1 ? beginner : data === 2 ? intermediate : data === 3 ? advanced : emp}</a>`;
+                        return `<a href="/${controller}/details/${row[arr[4]]}">${data === 1 ? beginner : data === 2 ? intermediate : data === 3 ? advanced : data}</a>`;
                     }
                 },
                 {
@@ -93,31 +93,3 @@ function Delete(url) {
         }
     });
 }
-
-//function Del(url, controller) {
-//    var controller = url.split('/')[1];
-
-//    swal({
-//        title: "Are You Sure",
-//        text: "Once deleted, you will not be able to recover",
-//        buttons: true,
-//        icon: "warning",
-//        danger: true
-//    }).then((willDelete) => {
-//        if (willDelete) {
-//            $.ajax({
-//                type: "DELETE",
-//                url: url,
-//                success: function (data) {
-//                    if (data.success) {
-//                        toastr.success(data.message);
-                        
-//                    }
-//                    else {
-//                        toastr.error(data.message);
-//                    }
-//                }
-//            });
-//        }
-//    });
-//}

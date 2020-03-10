@@ -10,7 +10,7 @@ namespace EmployeeManagement.Model
         Payment UpdatePayment(Payment payment);
         Payment RemovePayment(Payment payment);
         Payment GetPaymentById(int id);
-        List<Payment> GetAllPayment(int id);
+        List<PaymentIndexView> GetAllPayment();
 
         PaymentDetails AddPaymentDetail(PaymentDetails pd);
         PaymentDetails EditPaymentDetails(PaymentDetails pd);

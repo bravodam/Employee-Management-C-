@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace EmployeeManagement.Model
@@ -21,9 +22,22 @@ namespace EmployeeManagement.Model
             return payment;
         }
 
-        public List<Payment> GetAllPayment(int id)
+        public List<PaymentIndexView> GetAllPayment()
         {
-            throw new NotImplementedException();
+            PaymentIndexView pv = new PaymentIndexView();
+            var payments = new List<PaymentIndexView>();
+            var list = _db.Payments.Include(p => p.Student).ToList();
+            foreach(var payment in list)
+            {
+                PaymentIndexView paymentIndexView = new PaymentIndexView
+                {
+                    Id = payment.PaymentId,
+                    StudentName = payment.Student.Name,
+                    Amount = payment.Total
+                };
+                payments.Add(paymentIndexView);
+            }
+            return payments;
         }
 
 
@@ -39,7 +53,9 @@ namespace EmployeeManagement.Model
 
         public Payment RemovePayment(Payment payment)
         {
-            throw new NotImplementedException();
+            _db.Payments.Remove(payment);
+            _db.SaveChanges();
+            return payment;
         }
 
 
