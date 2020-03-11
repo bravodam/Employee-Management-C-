@@ -1,0 +1,47 @@
+﻿@model Company
+
+<div class="container">
+    <div class="row">
+        <form method="post" style="width: 100%">
+            <input asp-for="CompanyId" type="hidden" />
+
+            <div class="form-group">
+                <label asp-for="Name" class="col-form-label"></label>
+                <div>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Address"></label>
+                <div>
+                    <input asp-for="Address" class="form-control" />
+                    <span asp-validation-for="Address"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ContactName"></label>
+                <div>
+                    <input asp-for="ContactName" class="form-control" />
+                    <span asp-validation-for="ContactName"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ContactEmail"></label>
+                <div>
+                    <input asp-for="ContactEmail" class="form-control" />
+                    <span asp-validation-for="ContactEmail"></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <button type="submit" class="btn btn-primary">Update</button>
+                <a asp-action="Index" class="btn btn-default border ml-4">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+

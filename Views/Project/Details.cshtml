@@ -9,4 +9,21 @@
         <br />
         <p class="text-align-justify">@Model.Description</p>
     </div>
+
+    <div class="card-footer">
+        <form method="post" asp-controller="project" asp-action="remove" asp-route-id="@Model.ProjectId">
+            <button class="btn btn-default border" asp-action="index" style="width: auto">Back</button>
+            <a asp-action="edit" asp-route-id="@Model.ProjectId" class="btn btn-primary mx-4" style="width: auto">Edit</a>
+
+            <span id="confirmDeleteSpan_@Model.ProjectId" style="display:none">
+                Are You Sure?
+                <a class="btn btn-default border ml-4" style="width: auto" onclick="deleteData(@Model.ProjectId, false)">No</a>
+                <button type="submit" class="btn btn-danger" style="width: auto">Yes</button>
+            </span>
+
+            <span id="deleteSpan_@Model.ProjectId">
+                <a class="btn btn-danger" style="width: auto" onclick="deleteData(@Model.ProjectId, true)">Delete</a>
+            </span>
+        </form>
+    </div>
 </div>

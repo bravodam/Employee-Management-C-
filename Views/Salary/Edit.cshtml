@@ -1,0 +1,54 @@
+﻿@model Salary
+
+<div class="container">
+    <div class="row">
+        <form method="post" style="width: 100%">
+            <input asp-for="Id" type="hidden" />
+            <div class="form-group">
+                <label asp-for="EmploymentId" class="col-form-label"></label>
+                <div>
+                    <input asp-for="EmploymentId" class="form-control" />
+                    <span asp-validation-for="EmploymentId"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Role"></label>
+                <div>
+                    <input asp-for="Role" class="form-control" />
+                    <span asp-validation-for="Role"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Amount"></label>
+                <div>
+                    <input asp-for="Amount" class="form-control" />
+                    <span asp-validation-for="Amount"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Date"></label>
+                <div>
+                    <input asp-for="Date" class="form-control" />
+                    <span asp-validation-for="Date"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="PayDay"></label>
+                <div>
+                    <input asp-for="PayDay" class="form-control" />
+                    <span asp-validation-for="PayDay"></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <button type="submit" class="btn btn-default border">Update</button>
+                <a asp-action="Index" class="btn btn-primary ml-4">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using EmployeeManagement.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -79,27 +80,51 @@ namespace EmployeeManagement.Model
             return pd;
         }
 
-        public List<PaymentDetails> GetAllPaymentDetail(int id)
+        public List<PaymentDetailsAjaxViewModel> GetAllPaymentDetails()
         {
-            throw new NotImplementedException();
+            var allPaymentDetails = _db.PaymentDetails.Include(pd => pd.Payment).Include(pd => pd.Payment.Student).ToList();
+
+            var details = new List<PaymentDetailsAjaxViewModel>();
+
+            foreach(var detail in allPaymentDetails)
+            {
+                PaymentDetailsAjaxViewModel pd = new PaymentDetailsAjaxViewModel
+                {
+                    Id = detail.Id,
+                    AmountPaid = detail.AmountPaid,
+                    StudentName = detail.Payment.Student.Name,
+                    Date = detail.Date
+                };
+                details.Add(pd);
+            }
+            return details;
         }
 
 
-        public PaymentDetails EditPaymentDetails(PaymentDetails pd)
+        public PaymentDetails UpdatePaymentDetails(PaymentDetails pd)
         {
-            throw new NotImplementedException();
+            var pdToUpdate = _db.PaymentDetails.FirstOrDefault(p => p.Id == pd.Id);
+
+            pdToUpdate.AmountPaid = pd.AmountPaid;
+            pdToUpdate.Date = pd.Date;
+
+            _db.PaymentDetails.Update(pdToUpdate);
+            _db.SaveChanges();
+            return pd;
         }
 
 
         public PaymentDetails GetPaymentDetailsById(int id)
         {
-            throw new NotImplementedException();
+            return _db.PaymentDetails.Include(pd => pd.Payment).Include(pd => pd.Payment.Student).FirstOrDefault(pd => pd.Id == id);
         }
 
 
-        public PaymentDetails RemovePaymentDetails(PaymentDetails pd)
+        public PaymentDetails RemovePaymentDetail(PaymentDetails pd)
         {
-            throw new NotImplementedException();
+            _db.PaymentDetails.Remove(pd);
+            _db.SaveChanges();
+            return pd;
         }
     }
 }

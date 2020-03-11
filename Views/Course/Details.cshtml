@@ -14,10 +14,20 @@
         </div>
 
         <div class="card-header">
+
             <form method="post" asp-controller="course" asp-action="remove" asp-route-id="@Model.CourseId">
                 <a class="btn btn-default border" asp-controller="course" asp-action="index">Back</a>
                 <a class="btn btn-primary" asp-controller="course" asp-action="edit" asp-route-id="@Model.CourseId">Edit</a>
-                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete')">Delete</button>
+
+                <span id="confirmDeleteSpan_@Model.CourseId" style="display:none">
+                    Are You Sure?
+                    <a class="btn btn-default border ml-4" style="width: auto" onclick="deleteData(@Model.CourseId, false)">No</a>
+                    <button type="submit" class="btn btn-danger" style="width: auto">Yes</button>
+                </span>
+
+                <span id="deleteSpan_@Model.CourseId">
+                    <a class="btn btn-danger" style="width: auto" onclick="deleteData(@Model.CourseId, true)">Delete</a>
+                </span>
             </form>
         </div>
     </div>

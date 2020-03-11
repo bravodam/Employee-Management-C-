@@ -1,0 +1,24 @@
+﻿@model PaymentIndexView
+
+@{
+    ViewBag.Title = "Payment Details";
+    ViewBag.controller = "guarantor";
+}
+
+<div class="card">
+    <div class="card-header">
+        @Model.StudentName
+    </div>
+    <div class="card-body">
+        <h4 class="card-title">@Model.StudentName</h4>
+        <h6>Total: @Model.Amount</h6>
+    </div>
+
+    <div class="card-header">
+        <form method="post" asp-controller="batch" asp-action="remove" asp-route-id="@Model.Id">
+            <a class="btn btn-default border" asp-controller="payment" asp-action="index">Back</a>
+            <a class="btn btn-primary" asp-controller="payment" asp-action="edit" asp-route-id="@Model.Id">Edit</a>
+            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete')">Delete</button>
+        </form>
+    </div>
+</div>

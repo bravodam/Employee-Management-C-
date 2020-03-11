@@ -111,6 +111,19 @@
 
                         <a asp-controller="course" asp-action="index" class="list-group-item list-group-item-action"><i class="fa fa-users"></i>  Courses  <span class="badge bg-dark float-right text-light t-right">@_empRepository.GetAllCourses().Count()</span></a>
 
+
+                        <a asp-controller="project" asp-action="index" class="list-group-item list-group-item-action"><i class="fa fa-users"></i>  Projects  <span class="badge bg-dark float-right text-light t-right">@_project.GetAllProjects().Count()</span></a>
+                        <a asp-controller="payment" asp-action="index" class="list-group-item list-group-item-action"><i class="fa fa-users"></i>  Payments  <span class="badge bg-dark float-right text-light t-right">@_payment.GetAllPayment().Count()</span></a>
+                        <a asp-controller="company" asp-action="index" class="list-group-item list-group-item-action"><i class="fa fa-users"></i>  Companies  <span class="badge bg-dark float-right text-light t-right">@_company.GetAllCompanies().Count()</span></a>
+                        <a asp-controller="employment" asp-action="index" class="list-group-item list-group-item-action"><i class="fa fa-users"></i>  Employments  <span class="badge bg-dark float-right text-light t-right">@_employment.GetAllEmployment().Count()</span></a>
+                        <a asp-controller="paymentdetails" asp-action="index" class="list-group-item list-group-item-action"><i class="fa fa-users"></i>  Payment Details  <span class="badge bg-dark float-right text-light t-right">@_payment.GetAllPaymentDetails().Count()</span></a>
+                        <a asp-controller="salary" asp-action="index" class="list-group-item list-group-item-action"><i class="fa fa-users"></i>  Salaries  <span class="badge bg-dark float-right text-light t-right">@_salary.GetAllSalaries().Count()</span></a>
+
+
+
+
+
+
                         <a asp-controller="Home" asp-action="Index" class="list-group-item list-group-item-action"><i class="fa fa-users"></i>  Employees  <span class="badge bg-dark float-right text-light">@ViewBag.employees</span></a>
                         <a class="list-group-item list-group-item-action"><i class="fa fa-list-alt"></i>  Departments  <span class="badge float-right bg-dark text-light t-right">33</span></a>
                     </div>
@@ -202,7 +215,7 @@
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/CustomScript.js" asp-append-version="true"></script>
 
 
     @*<script src="https://code.jquery.com/jquery-3.4.1.min.js"

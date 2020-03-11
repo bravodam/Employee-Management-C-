@@ -39,7 +39,16 @@
             <form method="post" asp-controller="guarantor" asp-action="remove" asp-route-id="@Model.ID">
                 <a class="btn btn-default border" asp-controller="guarantor" asp-action="index">Back</a>
                 <a class="btn btn-primary" asp-controller="guarantor" asp-action="edit" asp-route-id="@Model.ID">Edit</a>
-                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete')">Delete</button>
+
+                <span id="confirmDeleteSpan_@Model.ID" style="display:none">
+                    Are You Sure?
+                    <a class="btn btn-default border ml-4" style="width: auto" onclick="deleteData(@Model.ID, false)">No</a>
+                    <button type="submit" class="btn btn-danger" style="width: auto">Yes</button>
+                </span>
+
+                <span id="deleteSpan_@Model.ID">
+                    <a class="btn btn-danger" style="width: auto" onclick="deleteData(@Model.ID, true)">Delete</a>
+                </span>
             </form>
         </div>
     </div>

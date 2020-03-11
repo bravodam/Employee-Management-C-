@@ -276,6 +276,7 @@ namespace EmployeeManagement.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Role")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -461,7 +462,7 @@ namespace EmployeeManagement.Migrations
 
             modelBuilder.Entity("EmployeeManagement.Model.Salary", b =>
                 {
-                    b.HasOne("EmployeeManagement.Model.Employment", null)
+                    b.HasOne("EmployeeManagement.Model.Employment", "Employment")
                         .WithOne("Salary")
                         .HasForeignKey("EmployeeManagement.Model.Salary", "EmploymentId")
                         .OnDelete(DeleteBehavior.Cascade)

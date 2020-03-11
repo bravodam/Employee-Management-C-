@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using EmployeeManagement.ViewModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace EmployeeManagement.Model
 {
@@ -12,31 +15,56 @@ namespace EmployeeManagement.Model
             _db = db;
         }
 
-        public Salary AddCompany(Salary s)
+        public Salary AddSalary(Salary s)
         {
             _db.Salaries.Add(s);
             _db.SaveChanges();
             return s;
         }
 
-        public IEnumerable<Salary> GetAllSalaries()
+        public List<SalaryDetailsViewModel> GetAllSalaries()
         {
-            throw new NotImplementedException();
+            var allSalaries = _db.Salaries.Include(s => s.Employment)
+                .Include(s => s.Employment.Company)
+                .Include(s => s.Employment.Student).ToList();
+
+            var details = new List<SalaryDetailsViewModel>();
+
+            foreach(var salary in allSalaries)
+            {
+                SalaryDetailsViewModel salaryDetailsView = new SalaryDetailsViewModel
+                {
+                    Amount = salary.Amount,
+                    CompanyName = salary.Employment.Company.Name,
+                    Date = salary.Date,
+                    EmploymentId = salary.EmploymentId,
+                    Id = salary.Id,
+                    PayDay = salary.PayDay,
+                    Role = salary.Role,
+                    StudentName = salary.Employment.Student.Name
+                };
+                details.Add(salaryDetailsView);
+            }
+            return details;
         }
 
         public Salary GetSalaryById(int id)
         {
-            throw new NotImplementedException();
+            return _db.Salaries.Include(s => s.Employment).FirstOrDefault(s => s.Id == id);
         }
 
         public Salary RemoveSalary(Salary s)
         {
-            throw new NotImplementedException();
+            _db.Salaries.Remove(s);
+            _db.SaveChanges();
+            return s;
         }
 
         public Salary UpdateSalary(Salary s)
         {
-            throw new NotImplementedException();
+            _db.Salaries.Update(s);
+            _db.SaveChanges();
+            return s;
         }
     }
 }

@@ -36,6 +36,7 @@ namespace EmployeeManagement
             services.AddScoped<ICompany, CompanyRepo>();
             services.AddScoped<IEmployment, EmploymentRepo>();
             services.AddScoped<IProject, ProjectRepo>();
+            services.AddScoped<ISalary, SalaryRepo>();
 
             services.AddRazorPages().AddRazorRuntimeCompilation();
         }

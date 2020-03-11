@@ -41,6 +41,35 @@ namespace EmployeeManagement.Controllers
             return View(company);
         }
 
+
+        //EDIT
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            Company company = _company.GetCompanyById(id);
+            if (company != null)
+            {
+                return View(company);
+            }
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Company model)
+        {
+            Company companyToUpdate = _company.GetCompanyById(model.CompanyId);
+
+            if (ModelState.IsValid)
+            {
+                if (companyToUpdate != null)
+                {
+                    _company.UpdateCompany(model);
+                    return RedirectToAction("Index");
+                }
+            }
+            return View(model);
+        }
+
         //DETAILS
         public IActionResult Details(int id)
         {
@@ -53,6 +82,22 @@ namespace EmployeeManagement.Controllers
             return RedirectToAction("Index");
         }
 
+        //REMOVE
+        [HttpPost]
+        public IActionResult Remove(int id)
+        {
+            var company = _company.GetCompanyById(id);
+
+            if (company != null)
+            {
+                _company.RemoveCompany(company);
+            }
+            return RedirectToAction("Index");
+
+        }
+
+
+        // AJAX
 
         //GETALL
         [HttpGet]
@@ -60,6 +105,21 @@ namespace EmployeeManagement.Controllers
         {
             var companies = _company.GetAllCompanies();
             return Json(new { data = companies });
+        }
+
+        //DELETE
+        [HttpDelete]
+        public JsonResult Delete(int id)
+        {
+            var companyToDelete = _company.GetCompanyById(id);
+
+            if (companyToDelete == null)
+            {
+                return Json(new { success = false, message = "Error while deletiing" });
+            }
+            _company.RemoveCompany(companyToDelete);
+
+            return Json(new { success = true, message = "Delete Successful" });
         }
     }
 }

@@ -1,0 +1,40 @@
+﻿@model Project
+
+<div class="container">
+    <div class="row">
+        <form method="post" style="width: 100%">
+            <input asp-for="ProjectId" type="hidden" value="@Model.ProjectId" disabled class="form-control" />
+
+            <div class="form-group">
+                <label asp-for="Title"></label>
+                <div>
+                    <input asp-for="Title" class="form-control" />
+                    <span asp-validation-for="Title"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Description"></label>
+                <div>
+                    <input asp-for="Description" class="form-control" />
+                    <span asp-validation-for="Description"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="GitUrl"></label>
+                <div>
+                    <input asp-for="GitUrl" class="form-control" />
+                    <span asp-validation-for="GitUrl"></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <button type="submit" class="btn btn-primary">Add</button>
+                <a asp-action="Index" class="btn btn-default border ml-4">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+

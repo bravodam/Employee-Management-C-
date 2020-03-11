@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using EmployeeManagement.ViewModels;
 
 namespace EmployeeManagement.Model
 {
@@ -9,7 +10,7 @@ namespace EmployeeManagement.Model
         Employment AddEmployment(Employment e);
         Employment UpdateEmployment(Employment e);
         Employment RemoveEmployment(Employment e);
-        Task<Employment> GetEmploymentByIdAsync(int id);
-        IEnumerable<Employment> GetAllEmployment();
+        Employment GetEmploymentById(int id);
+        List<EmploymentIndexViewModel> GetAllEmployment();
     }
 }

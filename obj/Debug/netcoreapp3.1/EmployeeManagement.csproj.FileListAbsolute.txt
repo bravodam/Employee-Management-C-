@@ -758,3 +758,14 @@
 /Users/ogbaragodwin/Desktop/code360/EmployeeManagement/EmployeeManagement/obj/Debug/netcoreapp3.1/Razor/Views/Project/Create.cshtml.g.cs
 /Users/ogbaragodwin/Desktop/code360/EmployeeManagement/EmployeeManagement/obj/Debug/netcoreapp3.1/Razor/Views/Project/Index.cshtml.g.cs
 /Users/ogbaragodwin/Desktop/code360/EmployeeManagement/EmployeeManagement/obj/Debug/netcoreapp3.1/Razor/Views/Project/Details.cshtml.g.cs
+/Users/ogbaragodwin/Desktop/code360/EmployeeManagement/EmployeeManagement/obj/Debug/netcoreapp3.1/Razor/Views/PaymentDetails/Edit.cshtml.g.cs
+/Users/ogbaragodwin/Desktop/code360/EmployeeManagement/EmployeeManagement/obj/Debug/netcoreapp3.1/Razor/Views/Payment/Details.cshtml.g.cs
+/Users/ogbaragodwin/Desktop/code360/EmployeeManagement/EmployeeManagement/obj/Debug/netcoreapp3.1/Razor/Views/PaymentDetails/Details.cshtml.g.cs
+/Users/ogbaragodwin/Desktop/code360/EmployeeManagement/EmployeeManagement/obj/Debug/netcoreapp3.1/Razor/Views/Project/Edit.cshtml.g.cs
+/Users/ogbaragodwin/Desktop/code360/EmployeeManagement/EmployeeManagement/obj/Debug/netcoreapp3.1/Razor/Views/Company/Edit.cshtml.g.cs
+/Users/ogbaragodwin/Desktop/code360/EmployeeManagement/EmployeeManagement/obj/Debug/netcoreapp3.1/Razor/Views/Employment/Details.cshtml.g.cs
+/Users/ogbaragodwin/Desktop/code360/EmployeeManagement/EmployeeManagement/obj/Debug/netcoreapp3.1/Razor/Views/Employment/Edit.cshtml.g.cs
+/Users/ogbaragodwin/Desktop/code360/EmployeeManagement/EmployeeManagement/obj/Debug/netcoreapp3.1/Razor/Views/Salary/Create.cshtml.g.cs
+/Users/ogbaragodwin/Desktop/code360/EmployeeManagement/EmployeeManagement/obj/Debug/netcoreapp3.1/Razor/Views/Salary/Index.cshtml.g.cs
+/Users/ogbaragodwin/Desktop/code360/EmployeeManagement/EmployeeManagement/obj/Debug/netcoreapp3.1/Razor/Views/Salary/Details.cshtml.g.cs
+/Users/ogbaragodwin/Desktop/code360/EmployeeManagement/EmployeeManagement/obj/Debug/netcoreapp3.1/Razor/Views/Salary/Edit.cshtml.g.cs

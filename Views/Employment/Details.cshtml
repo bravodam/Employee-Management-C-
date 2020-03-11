@@ -1,0 +1,33 @@
+﻿@model EmploymentIndexViewModel
+
+<div class="card">
+    <div class="card-header">
+        Employment Details
+    </div>
+    <div class="card-body">
+        <p><strong>Company</strong>: @Model.Company</p>
+        <br />
+        <p><strong>Student</strong>: @Model.StudentName</p>
+        <br />
+        <p><strong>Start Date</strong>: @Model.StartDate</p>
+        <br />
+        <p><strong>End Date</strong>: @Model.EndDate</p>
+        <br />
+
+        @if (Model.Salary != 0)
+        {
+            <p><strong>Salary</strong>: @Model.Salary</p>
+            <br />
+        }
+        else
+        {
+            <p><strong>Salary</strong>: Not Specified Yet</p>
+            <br />
+        }
+    </div>
+
+    <div class="card-footer">
+        <a class="btn btn-primary" asp-action="index" style="width: auto">Back</a>
+    </div>
+</div>
+

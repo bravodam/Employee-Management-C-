@@ -72,6 +72,26 @@ namespace EmployeeManagement.Controllers
             return View(model);
         }
 
+        // EDIT
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            var model = _project.GetProjectById(id);
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Project project)
+        {
+            if (ModelState.IsValid)
+            {
+                _project.UpdateProject(project);
+                return RedirectToAction("Index");
+            }
+            return View(project);
+        }
+
         // DETAILS
         [HttpGet]
         public IActionResult Details(int id)
@@ -85,8 +105,48 @@ namespace EmployeeManagement.Controllers
             return RedirectToAction("Index");
         }
 
+        //REMOVE
+        [HttpPost]
+        public IActionResult Remove(int id)
+        {
+            var project = _project.GetProjectById(id);
+            
+            if (project != null)
+            {
+                _project.RemoveProject(project);
+            }
+            return RedirectToAction("Index");
+
+        }
 
         // AJAX CALLS
+
+        //DELETE
+        [HttpDelete]
+        public JsonResult Delete(int id)
+        {
+            var projectToDelete = _project.GetProjectById(id);
+
+            if (projectToDelete == null)
+            {
+                return Json(new { success = false, message = "Error while deletiing" });
+            }
+            _project.RemoveProject(projectToDelete);
+
+            return Json(new { success = true, message = "Delete Successful" });
+        }
+
+
+
+        //GETALL
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            var projects = _project.GetAllProjects().ToList();
+            return Json(new { data = projects });
+        }
+
+        // SAVE
         [HttpPost]
         public JsonResult SaveAjax(ProjectAjaxViewModel model)
         {

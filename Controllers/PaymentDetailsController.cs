@@ -58,6 +58,43 @@ namespace EmployeeManagement.Controllers
             return View(model);
         }
 
+        // EDIT
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            var pd = _payment.GetPaymentDetailsById(id);
+            return View(pd);
+        }
+
+        // EDIT
+        [HttpPost]
+        public IActionResult Edit(PaymentDetails model)
+        {
+            if (ModelState.IsValid)
+            {
+                _payment.UpdatePaymentDetails(model);
+            }
+            return View(model);
+        }
+
+        //DETAILS
+        [HttpGet]
+        public IActionResult Details(int id)
+        {
+            PaymentDetails paymentDetails = _payment.GetPaymentDetailsById(id);
+            if (paymentDetails != null)
+            {
+                PaymentDetailsAjaxViewModel model = new PaymentDetailsAjaxViewModel();
+                model.Id = paymentDetails.Id;
+                model.AmountPaid = paymentDetails.AmountPaid;
+                model.Date = paymentDetails.Date;
+                model.StudentName = paymentDetails.Payment.Student.Name;
+
+                return View(model);
+            }
+            return RedirectToAction("Index");
+        }
+
         // AJAX CALLS
         [HttpPost]
         public JsonResult SaveAjax(PaymentDetailAjaxViewModel model)
@@ -108,6 +145,31 @@ namespace EmployeeManagement.Controllers
             var list = await _db.PaymentDetails.Where(pd => pd.PaymentId == id).ToListAsync();
 
             return Json(new { data = list });
+        }
+
+        // AJAX
+
+        //GETALL
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            var details = _payment.GetAllPaymentDetails().ToList();
+            return Json(new { data = details });
+        }
+
+        //DELETE
+        [HttpDelete]
+        public JsonResult Delete(int id)
+        {
+            var detailToDelete = _payment.GetPaymentDetailsById(id);
+
+            if (detailToDelete == null)
+            {
+                return Json(new { success = false, message = "Error while deletiing" });
+            }
+            _payment.RemovePaymentDetail(detailToDelete);
+
+            return Json(new { success = true, message = "Delete Successful" });
         }
     }
 }

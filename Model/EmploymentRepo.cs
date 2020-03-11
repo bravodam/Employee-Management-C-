@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using EmployeeManagement.ViewModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace EmployeeManagement.Model
@@ -21,28 +23,55 @@ namespace EmployeeManagement.Model
             return e;
         }
 
-        public IEnumerable<Employment> GetAllEmployment()
+        public List<EmploymentIndexViewModel> GetAllEmployment()
         {
-            return _db.Employments.Include(e => e.Student);
+            var allEmployemts = _db.Employments.Include(e => e.Student)
+                .Include(e => e.Company).Include(e => e.Salary).ToList();
+
+            var employmentDetails = new List<EmploymentIndexViewModel>();
+
+            foreach(var employment in allEmployemts)
+            {
+                EmploymentIndexViewModel employmentIndex = new EmploymentIndexViewModel
+                {
+                    Company = employment.Company.Name,
+                    EndDate = employment.EndDate,
+                    Id = employment.EmploymentId,
+                    StartDate = employment.StartDate,
+                    StudentName = employment.Student.Name,
+                };
+                if (employment.Salary != null)
+                {
+                    employmentIndex.Salary = employment.Salary.Amount;
+                }
+
+                employmentDetails.Add(employmentIndex);
+            }
+
+            return employmentDetails;
         }
 
-        public async Task<Employment> GetEmploymentByIdAsync(int id)
+        public Employment GetEmploymentById(int id)
         {
-            var employment = await _db.Employments
+            var employment = _db.Employments
                 .Include(e => e.Student)
                 .Include(e => e.Salary)
-                .FirstOrDefaultAsync(e => e.EmploymentId == id);
+                .Where(e => e.EmploymentId == id).FirstOrDefault(e => e.EmploymentId == id);
             return employment;
         }
 
         public Employment RemoveEmployment(Employment e)
         {
-            throw new NotImplementedException();
+            _db.Employments.Remove(e);
+            _db.SaveChanges();
+            return e;
         }
 
         public Employment UpdateEmployment(Employment e)
         {
-            throw new NotImplementedException();
+            _db.Employments.Update(e);
+            _db.SaveChanges();
+            return e;
         }
     }
 }

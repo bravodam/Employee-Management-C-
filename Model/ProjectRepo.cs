@@ -38,12 +38,22 @@ namespace EmployeeManagement.Model
 
         public Project RemoveProject(Project p)
         {
-            throw new NotImplementedException();
+            _db.Projects.Remove(p);
+            _db.SaveChanges();
+            return p;
         }
 
         public Project UpdateProject(Project p)
         {
-            throw new NotImplementedException();
+            var projectToUpdate = _db.Projects.FirstOrDefault(p => p.ProjectId == p.ProjectId);
+
+            projectToUpdate.Description = p.Description;
+            projectToUpdate.Title = p.Title;
+            projectToUpdate.GitUrl = p.GitUrl;
+
+            _db.Projects.Update(projectToUpdate);
+            _db.SaveChanges();
+            return p;
         }
 
 

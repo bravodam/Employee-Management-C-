@@ -17,12 +17,14 @@ namespace EmployeeManagement.Controllers
         private readonly IEmployeeRepository _employeeRepository;
         private readonly AppDbContext _db;
         private readonly IProject _project;
+        private readonly IPayment _payment;
 
-        public StudentController(IEmployeeRepository employeeRepo, AppDbContext db, IProject project)
+        public StudentController(IEmployeeRepository employeeRepo, AppDbContext db, IProject project, IPayment payment)
         {
             _employeeRepository = employeeRepo;
             _db = db;
             _project = project;
+            _payment = payment;
         }
         //INDEX
         // GET: /<controller>/
@@ -85,7 +87,7 @@ namespace EmployeeManagement.Controllers
         {
             if (ModelState.IsValid)
             {
-
+                // Check if provided batch exist, if it does not return view with model error
                 var existingBatch = _employeeRepository.GetAllBatches().Where(b => b.Id == student.BatchId).FirstOrDefault(b => b.Id == student.BatchId);
 
                 if (existingBatch == null)
@@ -95,13 +97,26 @@ namespace EmployeeManagement.Controllers
                     return View(student);
                 }
 
+                // If batch exist, create the student, add student to joint table
                 var newStudent = _employeeRepository.AddStudent(student);
 
-                StudentBatch studentBatch = new StudentBatch
+                // Get cost of student's program, and use it to create a payment record
+                var costOfNewStudentsProgram = _employeeRepository.GetBatch(newStudent.BatchId).Programme.Cost;
+
+                Payment payment = new Payment
                 {
-                    BatchId = newStudent.BatchId,
-                    StudentId = newStudent.StudentId
+                    StudentId = newStudent.StudentId,
+                    Total = costOfNewStudentsProgram
                 };
+
+                _payment.AddPayment(payment);
+
+
+                //StudentBatch studentBatch = new StudentBatch
+                //{
+                //    BatchId = newStudent.BatchId,
+                //    StudentId = newStudent.StudentId
+                //};
 
                 //var result = _db.StudentBatches.Add(studentBatch);
                 var result = _db.StudentBatches.Add(
@@ -114,13 +129,11 @@ namespace EmployeeManagement.Controllers
 
                 await _db.SaveChangesAsync();
 
+                // This line gets all the batches a student belong to from the joint table
                 var batches = _db.StudentBatches
                     .Include(s => s.Batch).Where(s => s.StudentId == newStudent.StudentId).ToList();
 
-                //var programs = _db.StudentBatches
-                //    .Include(b => b.Batch)
-                //    .Where(b => b.BatchId == newStudent.BatchId).ToList();
-
+                // If student belongs to a batch, get the program for that batch
                 if (batches != null)
                 {
                     var programs = new List<Programme>();
@@ -131,6 +144,8 @@ namespace EmployeeManagement.Controllers
                         programs.Add(_db.Programmes.Include(p => p.ProgrammeCourses).FirstOrDefault(p => p.ProgrammeId == batch.Batch.ProgrammeId));
                     }
 
+                    // After getting all the programs of a student, get the courses a student is suppose to have offerred or to offer from the
+                    // list of courses in each program
                     foreach (var program in programs)
                     {
                         foreach(var course in program.ProgrammeCourses)
@@ -145,6 +160,7 @@ namespace EmployeeManagement.Controllers
                         }
                     }
 
+                    // Add the student course to the joint studentcourses joint table
                     foreach (var itm in list)
                     {
                         _db.StudentCourses.Add(itm);

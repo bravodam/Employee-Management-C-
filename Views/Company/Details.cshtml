@@ -13,45 +13,60 @@
             </div>
         </div>
 
-        <div class="card mt-4">
-            <div class="card-header">
-                <h6>Employments</h6>
-            </div>
-            <div class="card-body mt-4">
-                @if (Model.Employments != null)
-                {
-                <table class="table table-striped table-responsive">
-                    <thead>
-                        <tr>
-                            <th>Student</th>
-                            <th>Start Date</th>
-                            <th>End Date</th>
-                            <th>Salary</th>
-                        </tr>
-                    </thead>
-                    @foreach (var employment in Model.Employments)
-                    {
-                        <tr>
-                            <td>@_empRepository.GetStudent(employment.StudentId).Name</td>
-                            <td>@employment.StartDate</td>
-                            <td>@employment.EndDate</td>
-                            @if (employment.Salary != null)
-                            {
+        @if (Model.Employments != null && Model.Employments.Count > 0)
+        {
+            <div class="card mt-4">
+                <div class="card-header">
+                    <h6>Employments</h6>
+                </div>
+                <div class="card-body mt-4">
 
-                                <td>@employment.Salary.Amount</td>
-                            }
-                            else
-                            {
-                                <td>Not stated yet</td>
-                            }
-                        </tr>
-                    }
-                </table>
-                }
-            </div>
-        </div>
+                    <table class="table table-striped table-responsive">
+                        <thead>
+                            <tr>
+                                <th>Student</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>Salary</th>
+                            </tr>
+                        </thead>
+                        @foreach (var employment in Model.Employments)
+                        {
+                            <tr>
+                                <td>@_empRepository.GetStudent(employment.StudentId).Name</td>
+                                <td>@employment.StartDate</td>
+                                <td>@employment.EndDate</td>
+                                @if (employment.Salary != null)
+                                {
 
-        <div class="card-footer mt-4">
-            <a asp-action="Index" class="btn btn-default border">Back</a>
-        </div>
+                                    <td>@employment.Salary.Amount</td>
+                                }
+                                else
+                                {
+                                    <td>Not stated yet</td>
+                                }
+                            </tr>
+                        }
+                    </table>
+                </div>
+            </div>
+        }
+
+
+    <div class="card-footer mt-4">
+        <form method="post" asp-controller="company" asp-action="remove" asp-route-id="@Model.CompanyId">
+            <button class="btn btn-default border" asp-action="index" style="width: auto">Back</button>
+            <a asp-action="edit" asp-route-id="@Model.CompanyId" class="btn btn-primary mx-4" style="width: auto">Edit</a>
+
+            <span id="confirmDeleteSpan_@Model.CompanyId" style="display:none">
+                Are You Sure?
+                <a class="btn btn-default border ml-4" style="width: auto" onclick="deleteData(@Model.CompanyId, false)">No</a>
+                <button type="submit" class="btn btn-danger" style="width: auto">Yes</button>
+            </span>
+
+            <span id="deleteSpan_@Model.CompanyId">
+                <a class="btn btn-danger" style="width: auto" onclick="deleteData(@Model.CompanyId, true)">Delete</a>
+            </span>
+        </form>
+    </div>
     </div>

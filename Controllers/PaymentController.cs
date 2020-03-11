@@ -68,6 +68,24 @@ namespace EmployeeManagement.Controllers
             return View(payment);
         }
 
+        //DETAILS
+        [HttpGet]
+        public IActionResult Details(int id)
+        {
+            Payment payment = _payment.GetPaymentById(id);
+            if (payment != null)
+            {
+                PaymentIndexView paymentIndex = new PaymentIndexView
+                {
+                    StudentName = payment.Student.Name,
+                    Amount = payment.Total,
+                    Id = payment.PaymentId
+                };
+                return View(paymentIndex);
+            }
+            return RedirectToAction("Index");
+        }
+
         //GETALL
         [HttpGet]
         public IActionResult GetAll()

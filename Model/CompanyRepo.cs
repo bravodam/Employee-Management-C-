@@ -36,12 +36,23 @@ namespace EmployeeManagement.Model
 
         public Company RemoveCompany(Company c)
         {
-            throw new NotImplementedException();
+            _db.Companies.Remove(c);
+            _db.SaveChanges();
+            return c;
         }
 
         public Company UpdateCompany(Company c)
         {
-            throw new NotImplementedException();
+            var company = _db.Companies.FirstOrDefault(com => com.CompanyId == c.CompanyId);
+
+            company.Address = c.Address;
+            company.ContactEmail = c.ContactEmail;
+            company.ContactName = c.ContactName;
+            company.Name = c.Name;
+
+            _db.Companies.Update(company);
+            _db.SaveChanges();
+            return c;
         }
     }
 }

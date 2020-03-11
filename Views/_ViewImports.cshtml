@@ -2,4 +2,10 @@
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @using EmployeeManagement.ViewModels
 @using EmployeeManagement.Model
+@inject IProject _project
 @inject IEmployeeRepository _empRepository
+
+@inject ICompany _company
+@inject IEmployment _employment
+@inject IPayment _payment
+@inject ISalary _salary

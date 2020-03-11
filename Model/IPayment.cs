@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using EmployeeManagement.ViewModels;
 
 namespace EmployeeManagement.Model
 {
@@ -13,9 +14,9 @@ namespace EmployeeManagement.Model
         List<PaymentIndexView> GetAllPayment();
 
         PaymentDetails AddPaymentDetail(PaymentDetails pd);
-        PaymentDetails EditPaymentDetails(PaymentDetails pd);
-        PaymentDetails RemovePaymentDetails(PaymentDetails pd);
+        PaymentDetails UpdatePaymentDetails(PaymentDetails pd);
+        PaymentDetails RemovePaymentDetail(PaymentDetails pd);
         PaymentDetails GetPaymentDetailsById(int id);
-        List<PaymentDetails> GetAllPaymentDetail(int id);
+        List<PaymentDetailsAjaxViewModel> GetAllPaymentDetails();
     }
 }

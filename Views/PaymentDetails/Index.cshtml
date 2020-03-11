@@ -8,12 +8,12 @@
 
 <div class="card mb-4" style="width: 100%;">
     <div class="card-header bg-primary ">
-        All Courses
+        All Payment Details
     </div>
     <div class="card-body text-center">
 
         <div class="text-right p3 mb-3 p-auto">
-            <a asp-controller="payment" asp-action="create" class=" btn btn-primary" style="width: auto">Add Payment</a>
+            <a asp-controller="paymentdetails" asp-action="create" class=" btn btn-primary" style="width: auto">Add Payment Detail</a>
         </div>
 
         <div class="row">
@@ -21,9 +21,9 @@
                 <table id="example" class="table table-striped table-hover" style="width: 100%">
                     <thead>
                         <tr>
-                            <th>Student</th>
-                            <th>Total</th>
-                            <th></th>
+                            <th>Student Name</th>
+                            <th>Amount Paid</th>
+                            <th>Date</th>
                             <th></th>
                             <th></th>
                         </tr>
@@ -38,6 +38,6 @@
 
 @section Scripts {
     <script>
-        exampleLoad("/payment/getall/", ["studentName", "amount", , , "id"], "payment");
+        exampleLoad("/paymentdetails/getall/", ["studentName", "amountPaid", "date", , "id"], "paymentdetails");
     </script>
 }
