@@ -130,7 +130,7 @@ const populate = (obj) => {
             //let elem = document.createElement('a');
 
             let elem = document.createElement('p');
-            let text = `<span><a href="/guarantor/details/${obj.guarantorId}">${obj.name}</a></span> <span class="btn btn-danger float-right p-0" onclick="totalCount(${obj.id}, ${obj.studentId})">X</span> <br />`;
+            let text = `<span><a href="/guarantor/details/${obj.id}">${obj.name}</a></span> <span class="btn btn-danger float-right p-0" onclick="totalCount(${obj.id}, ${obj.studentId})">X</span> <br />`;
 
             elem.innerHTML = text;
             guarantorDiv.appendChild(elem);

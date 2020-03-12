@@ -13,10 +13,14 @@ namespace EmployeeManagement.Controllers
     public class EmploymentController : Controller
     {
         private readonly IEmployment _employment;
+        private readonly ICompany _company;
+        private readonly IEmployeeRepository _empReop;
 
-        public EmploymentController(IEmployment employment)
+        public EmploymentController(IEmployment employment, ICompany company, IEmployeeRepository employeeRepository)
         {
             _employment = employment;
+            _company = company;
+            _empReop = employeeRepository;
         }
 
         // GET: /<controller>/
@@ -52,8 +56,18 @@ namespace EmployeeManagement.Controllers
         {
             if (ModelState.IsValid)
             {
-                _employment.AddEmployment(model);
-                return RedirectToAction("Index");
+                var company = _company.GetCompanyById(model.CompanyId);
+
+                var student = _empReop.GetStudent(model.StudentId);
+
+                if (company != null && student != null)
+                {
+                    _employment.AddEmployment(model);
+                    return RedirectToAction("Index");
+                } else
+                {
+                    ModelState.AddModelError("", "Please, make sure company and student exist");
+                }
             }
             return View(model);
         }
@@ -100,6 +114,19 @@ namespace EmployeeManagement.Controllers
             if (model != null)
             {
                 return View(model);
+            }
+            return RedirectToAction("Index");
+        }
+
+        // REMOVE
+        [HttpPost]
+        public IActionResult Remove(int id)
+        {
+            var employmentToDelete = _employment.GetEmploymentById(id);
+
+            if (employmentToDelete != null)
+            {
+                _employment.RemoveEmployment(employmentToDelete);
             }
             return RedirectToAction("Index");
         }

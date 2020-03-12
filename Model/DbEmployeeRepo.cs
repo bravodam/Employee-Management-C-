@@ -188,7 +188,7 @@ namespace EmployeeManagement.Model
 
         public Batch GetBatch(int id)
         {
-            return _db.Batches.Include(b => b.Programme).First(b => b.Id == id);
+            return _db.Batches.Include(b => b.Programme).Include(b => b.StudentBatches).First(b => b.Id == id);
         }
 
         public Batch UpdateBatch(Batch batch)

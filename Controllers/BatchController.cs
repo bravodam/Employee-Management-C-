@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using EmployeeManagement.Model;
 using EmployeeManagement.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -63,6 +64,9 @@ namespace EmployeeManagement.Controllers
                     Id = batch.Id,
                     Prog = batch.Programme
                 };
+
+                ViewBag.studentsInBatch = _db.StudentBatches.Include(b => b.Student).Select(b => b.Student).ToList();
+
                 return View(model);
             }
             return View();

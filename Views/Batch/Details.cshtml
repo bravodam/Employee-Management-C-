@@ -34,10 +34,26 @@
                 </a>
             </div>
         </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                Students In This Batch
+            </div>
+            <div class="card-body">
+                <ul class="list-group">
+                    @foreach(var student in ViewBag.studentsInBatch)
+                    {
+                        <li class="list-group-item"><a asp-controller="student" asp-action="details" asp-route-id="@student.StudentId">@student.Name</a></li>
+                    }
+                </ul>
+            </div>
+            <div class="card-footer">
+            </div>
+        </div>
     </div>
 
     <div class="card-header">
-        <form method="post" asp-controller="salary" asp-action="remove" asp-route-id="@Model.Id">
+        <form method="post" asp-controller="batch" asp-action="remove" asp-route-id="@Model.Id">
             <a class="btn btn-default border" asp-controller="course" asp-action="index">Back</a>
             <a class="btn btn-primary" asp-controller="batch" asp-action="edit" asp-route-id="@Model.Id">Edit</a>
 

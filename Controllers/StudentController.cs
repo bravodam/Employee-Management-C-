@@ -106,8 +106,15 @@ namespace EmployeeManagement.Controllers
                 Payment payment = new Payment
                 {
                     StudentId = newStudent.StudentId,
-                    Total = costOfNewStudentsProgram
                 };
+                if (newStudent.Type == StudentType.ISA)
+                {
+                    payment.Total = 1000000;
+                }
+                else
+                {
+                    payment.Total = costOfNewStudentsProgram;
+                }
 
                 _payment.AddPayment(payment);
 
